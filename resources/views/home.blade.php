@@ -20,7 +20,14 @@
                 <a href="/x-show">
                     <li class="col-span-1 rounded-lg bg-white text-center p-8 hover:bg-gray-300">
                         <p class="text-lg font-medium text-gray-900">x-show</p>
-                        <p class="text-xs font-medium text-gray-900">Set the text content of an element</p>       
+                        <p class="text-xs font-medium text-gray-900">Toggle the visibility of an element</p>       
+                    </li>
+                </a>
+
+                <a href="/x-text">
+                    <li class="col-span-1 rounded-lg bg-white text-center p-8 hover:bg-gray-300">
+                        <p class="text-lg font-medium text-gray-900">x-text/x-html</p>
+                        <p class="text-xs font-medium text-gray-900">Set the text content/inner HTML of an element</p>       
                     </li>
                 </a>
 

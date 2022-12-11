@@ -8,19 +8,22 @@ Route::get('/', function () {
 });
 
 Route::get('/x-data', function () {
-    return view('x-data');
+    return view('methods/x-data');
 });
 
 Route::get('/x-show', function () {
     return view('methods/x-show');
 });
 
+Route::get('/x-text', function () {
+    return view('methods/x-text');
+});
 
 
 Route::get('/faq', function () {
-    return view('faq');
+    return view('projects/faq');
 });
 
 Route::get('/rating', function () {
-    return view('rating');
+    return view('projects/rating');
 });
