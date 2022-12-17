@@ -8,4 +8,13 @@
           <button x-on:click="isOpen = false">Close Modal</button>
         </div>
     </div>
+
+    <!-- The element to be animated -->
+    <div x-data="{ show: false }" x-transition:enter="enter-transition duration-500" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="leave-transition duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <button x-on:click="show = !show">Close Modal</button>
+        <div x-show="show">
+            Hello
+        </div>
+    </div>
+  
 </x-layout>

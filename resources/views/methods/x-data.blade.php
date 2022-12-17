@@ -1,60 +1,66 @@
 <x-layout>
-    <div class="w-4/5 mx-auto test">
+    <div class="w-4/5 mx-auto text-white">
         <div class="my-5">
-            <p class="text-center text-3xl font-bold">x-data</p>
+            <h1 class="text-center text-3xl font-bold">x-data</h1>
         </div>
-
-        <div class="text-center my-5">
-            <p>Everything in Alpine starts with the x-data directive.</p>
+        <div class="text-center text-lg mt-5 mb-16">
+            <h2>Everything in Alpine starts with the x-data directive.</h2>
         </div>
-
-
-        <hr>
 
         <div class="my-5">
-            Occasionally, you want to create an Alpine component, but you don't need any data. In these cases, you can always pass in an empty object.
+            If you want to create an Alpine component, but you don't need any data, you can pass in an empty object.
         </div>
-
-        <div class="text-center">
-            <pre>
-                <span class="text-gray-500">&lt;</span><span class="text-blue-500">div</span> <span class="text-cyan-500">x-data</span>="{}"&gt;
-                &lt;div <span class="text-cyan-500">x-data</span>&gt;
-            </pre>
-        </div>
-        <hr>
+        <script type="text/plain" class="language-markup">
+            <div x-data="{}">
+        </script>
+        <script type="text/plain" class="language-markup">
+            <div x-data>
+        </script>
+        <hr class="mt-5">
 
         <div class="my-5">
-            You can store the data directly in the component
+            If you don't have much data, you can store it directly in the component
         </div>
-
-        <div class="text-center">
-            <pre>
-                &lt;div <span class="text-blue-500">x-data</span>="{ open: false }"&gt;
-                &lt;div <span class="text-blue-500">x-data</span>="{ message: 'Click me to change' }&gt;
-                &lt;div <span class="text-blue-500">x-data</span>="{ change(){ this.message = 'Change message' } }&gt;
-
-            </pre>
+        <script type="text/plain" class="language-markup">
+            <div x-data="{ open: false }">
+        </script>
+        <script type="text/plain" class="language-markup">
+            <div x-data="{ message: 'Click me to change' }">
+        </script>
+        <script type="text/plain" class="language-javascript">
+            <div x-data="{ change(){ this.message = 'Change message' } }>
+        </script>
+        <div class="my-5">
+            To store multiple, you can simply use a comma
         </div>
-        <hr>
+        <script type="text/plain" class="language-markup">
+            <div x-data="{ open: false, message: 'Click me to change' }">
+        </script>
+        <hr class="mt-5">
 
 
-        <div class="flex">
-            <script type="text/plain" class="language-markup">
-                <div x-data="{ open: false }" class="border border-green-500 text-center ">
-                    <button x-on:click="open = ! open">Toggle Dropdown</button>
-                    <div x-show="open">
-                        Dropdown Contents...
-                    </div>
+        <div class="my-5">
+            If you have too much data to store, you can extract the x-data object to a component using Alpine.data
+        </div>
+        <script type="text/plain" class="language-markup">
+            <div x-data="dropdown">
+                <button @click="toggle">Toggle Content</button>
+             
+                <div x-show="open">
+                    Content...
                 </div>
-            </script>
-    
-            <pre class="language-html">
-                <code>
-                    <p>This is an HTML code block.</p>
-                </code>
-            </pre>
-        </div>
-
-
+            </div>
+        </script>
+        <script type="text/plain" class="language-javascript">
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('dropdown', () => ({
+                    open: false,
+        
+                    toggle() {
+                        this.open = ! this.open
+                    },
+                }))
+            })
+        </script>
     </div>
 </x-layout>
