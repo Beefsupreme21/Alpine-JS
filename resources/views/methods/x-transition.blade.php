@@ -1,59 +1,147 @@
 <x-layout>
-    <div class="w-4/5 mx-auto text-white">
-        <div class="my-5">
-            <h1 class="text-center text-3xl font-bold">x-transition</h1>
-        </div>
-        <div class="text-center text-lg mt-5 mb-16">
-            <h2>Transition an element in and out using CSS transitions</h2>
-        </div>
-
-        {{-- Explaination --}}
-        <div class="my-5">
-            <p>The x-transition directive takes six arguments: enter, enter-start, enter-end, leave, leave-start, and leave-end. These arguments correspond to the different stages of the transition</p>
-            <ul>
-                <li>enter: This class is applied to the element when it is added to the DOM</li>
-                <li>enter-start: This class is applied to the element at the start of the enter transition</li>
-                <li>enter-end: This class is applied to the element at the end of the enter transition</li>
-                <li>leave: This class is applied to the element when it is removed from the DOM</li>
-                <li>leave-start: This class is applied to the element at the start of the leave transition</li>
-                <li>leave-end: This class is applied to the element at the end of the leave transition</li>
-            </ul>
-        </div>
-
-        {{-- Example --}}
-        <div class="my-5">
-            <div x-data="{ isOpen: false }">
-                <button x-on:click="isOpen = true">Open Modal</button>
-                <div x-show="isOpen" x-transition:enter="transition-ease-in" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                     x-transition:leave="transition-ease-in" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
-                  <h1>Modal Title</h1>
-                  <p>Modal content goes here</p>
-                  <button x-on:click="isOpen = false">Close Modal</button>
-                </div>
-            </div>
-        </div>
-
-        {{-- Code --}}
-        <script type="text/plain" class="language-markup">
-            <div x-data="{ isOpen: false }">
-                <button x-on:click="isOpen = true">Open Modal</button>
-                <div x-show="isOpen" x-transition:enter="transition-ease-in" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                     x-transition:leave="transition-ease-in" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
-                  <h1>Modal Title</h1>
-                  <p>Modal content goes here</p>
-                  <button x-on:click="isOpen = false">Close Modal</button>
-                </div>
-            </div>
-        </script>
-
-        <hr class="mt-5">
-
-
-
-
-
+  <div class="w-4/5 mx-auto text-white">
+    <div>
+        <h1 class="text-4xl font-bold my-5">x-transition</h1>
+        <h2 class="text-xl mt-5 mb-16">Transition an element in and out using CSS transitions</h2>
     </div>
 
+    <div class="mt-10 mb-5">
+      <div class="flex items-center mb-5 -ml-10">
+        <img src="{{ asset('images/hashtag.png') }}" class="w-8 h-8 mr-2" alt="My Image">
+        <p class="text-3xl">Transition helper</p>
+      </div>
+      <p>By default, the duration is set to be 150 milliseconds when entering, and 75 milliseconds when leaving.</p>
+      <div x-data="{ open: false }" class="my-5">
+        <button @click="open = !open" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Toggle
+        </button>
+        <span x-show="open" x-transition>
+          Hello
+        </span>
+      </div>
+      <script type="text/plain" class="language-markup max-w-[640px]">
+        <span x-show="open" x-transition>Hello</span>
+      </script>
+    </div>
+
+
+    <div>
+      <div class="flex items-center my-5 -ml-6">
+        <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
+        <p class="text-xl">Customizing duration</p>
+      </div>
+      <p>This will transition for 500 milliseconds when entering, and 500 milliseconds when leaving.</p>
+      <div x-data="{ open: false }" class="my-5">
+        <button @click="open = !open" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Toggle
+        </button>
+        <span x-show="open" x-transition.duration.500ms>
+          Hello
+        </span>
+      </div>
+      <script type="text/plain" class="language-markup max-w-[640px]">
+        <span x-show="open" x-transition.duration.500ms>Hello</span>
+      </script>
+    </div>
+
+    <div class="mt-10 mb-5">
+      <div class="flex items-center mb-5 -ml-10">
+        <img src="{{ asset('images/hashtag.png') }}" class="w-8 h-8 mr-2" alt="My Image">
+        <p class="text-3xl">Using CSS classes to customize them</p>
+      </div>
+      <p class="my-5">The x-transition directive takes six arguments: enter, enter-start, enter-end, leave, leave-start, and leave-end</p>
+      <ul class="my-6 text-lg">
+        <li class="text-gray-400"><span class="font-bold text-white">enter: </span>When it is added to the DOM</li>
+        <li class="text-gray-400"><span class="font-bold text-white">enter-start: </span>At the start of the enter transition</li>
+        <li class="text-gray-400"><span class="font-bold text-white">enter-end: </span>At the end of the enter transition</li>
+        <li class="text-gray-400"><span class="font-bold text-white">leave: </span>When it is removed from the DOM</li>
+        <li class="text-gray-400"><span class="font-bold text-white">leave-start: </span>At the start of the leave transition</li>
+        <li class="text-gray-400"><span class="font-bold text-white">leave-end: </span>At the end of the leave transition</li>
+      </ul>
+    </div>
+
+    <div class="my-5 h-40">
+      <div class="flex items-center my-5 -ml-6">
+        <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
+        <p class="text-xl">Example 1</p>
+      </div>
+      <div x-data="{ isOpen: false }">
+        <button @click="isOpen = !isOpen" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Toggle
+        </button>
+        <div x-show="isOpen" 
+          x-transition:enter="duration-300 transition-ease-in" 
+          x-transition:enter-start="opacity-0" 
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="duration-300 transition-ease-in" 
+          x-transition:leave-start="opacity-100" 
+          x-transition:leave-end="opacity-0">
+            <h1>Modal Title</h1>
+            <p>Modal content goes here</p>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/plain" class="language-markup max-w-[640px]">
+      <div x-data="{ isOpen: false }">
+          <button x-on:click="isOpen = !isOpen">Open Modal</button>
+          <div x-show="isOpen" 
+            x-transition:enter="duration-300 transition-ease-in" 
+            x-transition:enter-start="opacity-0" 
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="duration-300 transition-ease-in" 
+            x-transition:leave-start="opacity-100" 
+            x-transition:leave-end="opacity-0">
+              <h1>Modal Title</h1>
+              <p>Modal content goes here</p>
+          </div>
+      </div>
+    </script>
+
+
+    <div class="my-5">
+      <div class="flex items-center my-5 -ml-6">
+        <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
+        <p class="text-xl">Example 2</p>
+      </div>
+      <div x-data="{ open: false }" class="h-56">
+        <button @click="open = !open" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Toggle
+        </button>
+        <nav x-show="open" class="bg-gray-800 p-4"
+          x-transition:enter="duration-300 ease-out" 
+          x-transition:enter-start="opacity-0 transform -translate-x-full" 
+          x-transition:enter-end="opacity-100 transform translate-x-0" 
+          x-transition:leave="duration-200 ease-in" 
+          x-transition:leave-start="opacity-100 transform translate-x-0" 
+          x-transition:leave-end="opacity-0 transform -translate-x-full">
+            <a href="#" class="block mt-4">Home</a>
+            <a href="#" class="block mt-4">About</a>
+            <a href="#" class="block mt-4">Contact</a>
+        </nav>
+      </div>
+    </div>
+
+    <script type="text/plain" class="language-markup max-w-[640px]">
+      <div x-data="{ open: false }">
+        <button @click="open = !open" 
+          class="bg-blue-500 font-bold py-2 px-4 rounded">
+            Toggle Menu
+        </button>
+        <nav x-show="open" class="bg-gray-800 p-4"
+          x-transition:enter="duration-300 ease-out" 
+          x-transition:enter-start="opacity-0 transform -translate-x-full" 
+          x-transition:enter-end="opacity-100 transform translate-x-0" 
+          x-transition:leave="duration-200 ease-in" 
+          x-transition:leave-start="opacity-100 transform translate-x-0" 
+          x-transition:leave-end="opacity-0 transform -translate-x-full">
+            <a href="#" class="block mt-4">Home</a>
+            <a href="#" class="block mt-4">About</a>
+            <a href="#" class="block mt-4">Contact</a>
+        </nav>
+      </div>
+    </script>
+  </div>
 </x-layout>
 
 {{-- // Get the element you want to show

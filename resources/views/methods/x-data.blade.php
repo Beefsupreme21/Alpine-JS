@@ -10,39 +10,39 @@
         <div class="my-5">
             If you want to create an Alpine component, but you don't need any data, you can pass in an empty object.
         </div>
-        <script type="text/plain" class="language-markup">
+        <script type="text/plain" class="language-markup max-w-[640px]">
             <div x-data="{}">
         </script>
-        <script type="text/plain" class="language-markup">
+        <script type="text/plain" class="language-markup max-w-[640px]">
             <div x-data>
         </script>
-        <hr class="mt-5">
+        <hr class="my-12">
 
         <div class="my-5">
             If you don't have much data, you can store it directly in the component
         </div>
-        <script type="text/plain" class="language-markup">
+        <script type="text/plain" class="language-markup max-w-[640px]">
             <div x-data="{ open: false }">
         </script>
-        <script type="text/plain" class="language-markup">
+        <script type="text/plain" class="language-markup max-w-[640px]">
             <div x-data="{ message: 'Click me to change' }">
         </script>
-        <script type="text/plain" class="language-javascript">
+        <script type="text/plain" class="language-javascript max-w-[640px]">
             <div x-data="{ change(){ this.message = 'Change message' } }>
         </script>
         <div class="my-5">
             To store multiple, you can simply use a comma
         </div>
-        <script type="text/plain" class="language-markup">
+        <script type="text/plain" class="language-markup max-w-[640px]">
             <div x-data="{ open: false, message: 'Click me to change' }">
         </script>
-        <hr class="mt-5">
+        <hr class="my-12">
 
 
         <div class="my-5">
             If you have too much data to store, you can extract the x-data object to a component using Alpine.data
         </div>
-        <script type="text/plain" class="language-markup">
+        <script type="text/plain" class="language-markup max-w-[640px]">
             <div x-data="dropdown">
                 <button @click="toggle">Toggle Content</button>
              
@@ -51,7 +51,7 @@
                 </div>
             </div>
         </script>
-        <script type="text/plain" class="language-javascript">
+        <script type="text/plain" class="language-markup max-w-[640px]">
             document.addEventListener('alpine:init', () => {
                 Alpine.data('dropdown', () => ({
                     open: false,

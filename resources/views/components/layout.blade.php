@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Alpine-JS</title>
+        <link rel = "icon" href="{{ asset('images/alpinejs.svg') }}" type = "image/x-icon">
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="//unpkg.com/alpinejs" defer></script>
         <link rel="stylesheet" href="{{ asset('prism.css') }}">
@@ -26,11 +27,9 @@
                 </svg>
               </button>
             </div>
-            <main class="flex-1 bg-[#4A7C59]">
-                <div class="mx-auto max-w-7xl py-4 px-4 sm:px-6 md:px-8">
-                    <div class="rounded-lg border-4 border-dashed border-gray-200">
-                        {{ $slot }}
-                    </div>
+            <main class="flex-1 bg-[#171923]">
+                <div class="max-w-screen-lg min-h-screen sm:px-16 md:px-24">
+                    {{ $slot }}
                 </div>
             </main>
         </div>

@@ -1,7 +1,7 @@
 <x-layout>
     <div class="mx-auto">
-        <div class="text-center text-white mt-8">
-            <p class="text-3xl">Alpine JS</p>
+        <div class="text-center text-white">
+            <p class="text-5xl my-8">Alpine JS</p>
             <p>It's not meant to replace frameworks like Vue or React</p>
             <p>Useful in cases where minimal JS is needed. Dropdowns, tabs, models ect.</p>
         </div>
@@ -26,8 +26,8 @@
 
                 <a href="/x-text">
                     <li class="col-span-1 border border-black rounded-lg bg-white text-center min-h-32 p-8 hover:bg-gray-300">
-                        <p class="text-lg font-medium text-gray-900">x-text/x-html</p>
-                        <p class="text-xs font-medium text-gray-900">Set the text content/inner HTML of an element</p>       
+                        <p class="text-lg font-medium text-gray-900">x-text/p>
+                        <p class="text-xs font-medium text-gray-900">Set the text of an element</p>       
                     </li>
                 </a>
 
