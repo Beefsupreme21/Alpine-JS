@@ -1,5 +1,5 @@
 <div class="hidden md:fixed md:inset-y-0 md:flex md:w-80 md:flex-col">
-    <div class="flex min-h-0 flex-1 flex-col bg-[#151720]">
+    <div class="flex min-h-0 flex-1 flex-col bg-[#12141C]">
         <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
             <div class="flex flex-shrink-0 items-center px-6">
                 <a href="/" class="flex items-center py-1 font-bold rounded-md text-white hover:text-[#77C1D2]">
