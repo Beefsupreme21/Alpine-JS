@@ -8,19 +8,22 @@
         <div class="mt-10 mb-5">
             <div class="flex items-center mb-5 -ml-10">
                 <img src="{{ asset('images/hashtag.png') }}" class="w-8 h-8 mr-2" alt="My Image">
-                <p class="text-3xl">Transition helper</p>
+                <p class="text-3xl">Binding classes</p>
             </div>
-            <p>By default, the duration is set to be 150 milliseconds when entering, and 75 milliseconds when leaving.</p>
-            <div x-data="{ open: false }" class="my-5">
-                <button @click="open = !open" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Toggle
-                </button>
-                <span x-show="open" x-transition>
-                    Hello
-                </span>
+            <p>x-bind is most often useful for setting specific classes on an element based on your Alpine state.</p>
+            <div x-data="{ open: false }" class="h-16 mt-5">
+                <button x-on:click="open = ! open">Toggle Dropdown</button>
+                <div :class="open ? '' : 'hidden'">
+                  Dropdown Contents...
+                </div>
             </div>
             <script type="text/plain" class="language-markup max-w-[640px]">
-                <span x-show="open" x-transition>Hello</span>
+                <div x-data="{ open: false }">
+                    <button x-on:click="open = ! open">Toggle Dropdown</button>
+                    <div :class="open ? '' : 'hidden'">
+                      Dropdown Contents...
+                    </div>
+                </div>
             </script>
         </div>
     </div>
