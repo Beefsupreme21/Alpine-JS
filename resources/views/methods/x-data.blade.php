@@ -49,7 +49,7 @@
         <div class="mt-10 mb-5">
             <div class="flex items-center my-5 -ml-6">
                 <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
-                <p class="text-xl">x-data with lots of data</p>
+                <p class="text-xl">x-data with re-useable data</p>
             </div>
             <p>If you have too much data to store, you can extract the x-data object to a component using Alpine.data</p>
             <script type="text/plain" class="language-markup max-w-[640px]">

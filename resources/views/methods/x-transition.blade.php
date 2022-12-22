@@ -44,12 +44,38 @@
       </script>
     </div>
 
+    <div>
+      <div class="flex items-center my-5 -ml-6">
+        <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
+        <p class="text-xl">Customizing duration</p>
+      </div>
+      <p>This will.</p>
+      <div x-data="{ open: false }" class="my-4">
+        <button x-on:click="open = ! open">Open/Close</button>
+        <div x-show="open"
+          x-transition:enter.duration.200ms
+          x-transition:leave.duration.1500ms>
+          Content
+        </div>
+      </div>
+      <script type="text/plain" class="language-markup max-w-[640px]">
+        <div x-data="{ open: false }" class="my-4">
+          <button x-on:click="open = ! open">Open/Close</button>
+          <div x-show="open"
+            x-transition:enter.duration.200ms
+            x-transition:leave.duration.1500ms>
+            Content
+          </div>
+        </div>
+      </script>
+    </div>
+
     <div class="mt-10 mb-5">
       <div class="flex items-center mb-5 -ml-10">
         <img src="{{ asset('images/hashtag.png') }}" class="w-8 h-8 mr-2" alt="My Image">
         <p class="text-3xl">Using CSS classes to customize them</p>
       </div>
-      <p class="my-5">The x-transition directive takes six arguments: enter, enter-start, enter-end, leave, leave-start, and leave-end</p>
+      <p class="my-5">The x-transition directive can take the following six arguments:</p>
       <ul class="my-6 text-lg">
         <li class="text-gray-400"><span class="font-bold text-white">enter: </span>When it is added to the DOM</li>
         <li class="text-gray-400"><span class="font-bold text-white">enter-start: </span>At the start of the enter transition</li>
@@ -60,10 +86,11 @@
       </ul>
     </div>
 
+
     <div class="my-5 h-40">
       <div class="flex items-center my-5 -ml-6">
         <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
-        <p class="text-xl">Example 1</p>
+        <p class="text-xl">Example 2</p>
       </div>
       <div x-data="{ isOpen: false }">
         <button @click="isOpen = !isOpen" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -102,7 +129,7 @@
     <div class="my-5">
       <div class="flex items-center my-5 -ml-6">
         <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
-        <p class="text-xl">Example 2</p>
+        <p class="text-xl">Example 3</p>
       </div>
       <div x-data="{ open: false }" class="h-56">
         <button @click="open = !open" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">

@@ -1,10 +1,8 @@
 <x-layout>
     <div class="w-4/5 mx-auto text-white">
-        <div class="my-5">
-            <h1 class="text-center text-3xl font-bold">x-show</h1>
-        </div>
-        <div class="text-center text-lg mt-5 mb-16">
-            <h2>Toggle the visibility of an element</h2>
+        <div>
+            <h1 class="text-4xl font-bold my-5">x-show</h1>
+            <h2 class="text-xl mt-5 mb-16">Toggle the visibility of an element</h2>
         </div>
 
         <div class="my-5">
@@ -18,7 +16,7 @@
 
 
         <script type="text/plain" class="language-markup">
-            <div x-data="{ open: false }" class="border border-green-500 text-center ">
+            <div x-data="{ open: false }">
                 <button x-on:click="open = ! open">Toggle Dropdown</button>
                 <div x-show="open">
                     Dropdown Contents...
@@ -26,8 +24,7 @@
             </div>
         </script>
 
-        <hr class="mt-5">
-
+  
 
 
 
