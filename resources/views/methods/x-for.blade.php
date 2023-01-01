@@ -1,26 +1,76 @@
 <x-layout>
     <div class="w-4/5 mx-auto text-white">
-        <div>
+        <div class="mb-16">
             <h1 class="text-4xl font-bold my-5">x-for</h1>
-            <h2 class="text-xl mt-5 mb-16">Repeat a block of HTML based on a data set</h2>
+            <h2 class="text-xl mt-5 mb-5">Basically a foreach loop for Alpine data</h2>
+            <ul class="list-disc pl-6">
+                <li>x-for MUST be declared on a template element</li>
+                <li>That template element MUST have only one root element</li>
+            </ul>
         </div>
     
         <div class="mt-10 mb-5">
-            <div class="flex items-center mb-5 -ml-10">
-                <img src="{{ asset('images/hashtag.png') }}" class="w-8 h-8 mr-2" alt="My Image">
-                <p class="text-3xl">Transition helper</p>
+            <div class="flex items-center my-5 -ml-6">
+                <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
+                <p class="text-xl">Example 1</p>
             </div>
-            <p>By default, the duration is set to be 150 milliseconds when entering, and 75 milliseconds when leaving.</p>
-            <div x-data="{ open: false }" class="my-5">
-                <button @click="open = !open" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Toggle
-                </button>
-                <span x-show="open" x-transition>
-                    Hello
-                </span>
+            <div x-data="{ colors: ['Red', 'Orange', 'Yellow'] }">
+                <template x-for="color in colors">
+                    <li x-text="color"></li>
+                </template>
             </div>
             <script type="text/plain" class="language-markup max-w-[640px]">
-                <span x-show="open" x-transition>Hello</span>
+                <div x-data="{ colors: ['Red', 'Orange', 'Yellow'] }">
+                    <template x-for="color in colors">
+                        <li x-text="color"></li>
+                    </template>
+                </div>
+            </script>
+        </div>
+
+        <div class="mt-10 mb-5">
+            <div class="flex items-center my-5 -ml-6">
+                <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
+                <p class="text-xl">Example 2</p>
+            </div>
+            <p>You can access data within an objec by using dot notation</p>
+            <div x-data="{ colors: [{id: 1, name: 'Red'}, {id: 2, name: 'Orange'}] }">
+                <template x-for="color in colors">
+                    <div>
+                        <span x-text="color.id"></span>
+                        <span x-text="color.name"></span>
+                    </div>
+                </template>
+            </div>
+            <script type="text/plain" class="language-markup max-w-[640px]">
+                <div x-data="{ colors: [{id: 1, name: 'Red'}, {id: 2, name: 'Orange'}] }">
+                    <template x-for="color in colors">
+                        <div>
+                            <span x-text="color.id"></span>
+                            <span x-text="color.name"></span>
+                        </div>
+                    </template>
+                </div>                  
+            </script>
+        </div>
+
+        <div class="mt-10 mb-5">
+            <div class="flex items-center my-5 -ml-6">
+                <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
+                <p class="text-xl">Looping a specific number of times</p>
+            </div>
+            <p class="mb-4">Here we got 10 numbers but are only looping through 5 of them</p>
+            <div x-data="{ numbers: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'] }">
+                <template x-for="number in 5">
+                    <span x-text="number"></span>
+                </template>
+            </div>
+            <script type="text/plain" class="language-markup max-w-[640px]">
+                <div x-data="{ numbers: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'] }">
+                    <template x-for="number in 5">
+                        <span x-text="number"></span>
+                    </template>
+                </div>                  
             </script>
         </div>
     </div>

@@ -5,24 +5,51 @@
             <h2 class="text-xl mt-5 mb-16">Toggle the visibility of an element</h2>
         </div>
 
-        <div class="my-5">
-            <div x-data="{ open: false }">
+        <div class="mt-10 mb-5">
+            <div class="flex items-center my-5 -ml-6">
+                <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
+                <p class="text-xl">Example 1</p>
+            </div>
+            <div x-data="{ open: false }" class="h-20">
                 <button x-on:click="open = ! open">Toggle Dropdown</button>
                 <div x-show="open">
                     Dropdown Contents...
                 </div>
             </div>
+            <script type="text/plain" class="language-markup max-w-[640px]">
+                <div x-data="{ open: false }">
+                    <button x-on:click="open = ! open">Toggle Dropdown</button>
+                    <div x-show="open">
+                        Dropdown Contents...
+                    </div>
+                </div>
+            </script>
         </div>
 
 
-        <script type="text/plain" class="language-markup">
-            <div x-data="{ open: false }">
-                <button x-on:click="open = ! open">Toggle Dropdown</button>
+        <div class="mt-10 mb-5">
+            <div class="flex items-center my-5 -ml-6">
+                <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
+                <p class="text-xl">Example 1</p>
+            </div>
+            <div x-data="{ open: false }" class="mb-5">
+                <button x-on:click="open = ! open">Toggle open state</button>
                 <div x-show="open">
-                    Dropdown Contents...
+                    This element is visible.
+                </div>
+                <div x-show="!open">
+                    This element is hidden.
                 </div>
             </div>
-        </script>
+            <script type="text/plain" class="language-markup max-w-[640px]">
+                <div x-data="{ open: false }">
+                    <button x-on:click="open = ! open">Toggle Dropdown</button>
+                    <div x-show="open">
+                        Dropdown Contents...
+                    </div>
+                </div>
+            </script>
+        </div>
 
   
 
