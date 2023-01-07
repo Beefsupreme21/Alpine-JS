@@ -1,9 +1,41 @@
 <x-layout>
-
-    <div x-data="{ message: '' }" class="container mx-auto p-4">
-      <input type="text" x-model="message" class="border rounded p-2 w-full" />
-      <p class="text-gray-700 mt-2" x-text="message"></p>
+    <div x-data="{ selected: '' }">
+            <button x-on:click="selected !== 1 ? selected = 1 : selected = ''" class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full focus:outline-none focus:shadow-outline">
+            Toggle Accordion 1
+        </button>
+        <div x-show="selected === 1" x-transition.duration.400ms x-cloak class="py-4">
+            <p class="p-4">
+                Lorem ipsum
+            </p>
+        </div>
+        <button x-on:click="selected !== 2 ? selected = 2 : selected = ''" class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full focus:outline-none focus:shadow-outline">
+            Toggle Accordion 2
+        </button>
+        <div x-show="selected === 2" x-transition.duration.400ms x-cloak class="py-4">
+            <p class="p-4">
+                Lorem ipsum
+            </p>
+        </div>
     </div>
+
+    <div x-data="{ colors: ['red', 'green', 'blue'] }">
+        <template x-for="color in colors">
+            <div class="h-24 w-24 inline-block" x-bind:class="color">
+            </div>
+        </template>
+    </div>
+
+    <style>
+        .red {
+            background-color: red;
+        }
+        .green {
+            background-color: green;
+        }
+        .blue {
+            background-color: blue;
+        }
+    </style>
       
-      
+  
 </x-layout>

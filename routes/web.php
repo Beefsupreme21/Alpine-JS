@@ -71,10 +71,20 @@ Route::get('/x-ignore', function () {
     return view('methods/x-ignore');
 });
 
+
+
+
+
+
+
 Route::get('/faq', function () {
     return view('projects/faq');
 });
 
 Route::get('/rating', function () {
     return view('projects/rating');
+});
+
+Route::get('/dropdown', function () {
+    return view('projects/dynamic-dropdown');
 });

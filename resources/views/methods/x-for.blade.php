@@ -73,5 +73,34 @@
                 </div>                  
             </script>
         </div>
+
+        <div class="mt-10 mb-5">
+            <div class="flex items-center mb-5 -ml-10">
+                <img src="{{ asset('images/hashtag.png') }}" class="w-8 h-8 mr-2" alt="My Image">
+                <p class="text-3xl">Keys</p>
+            </div>
+            <p class="mb-5">You'll need to specify a key for each iteration if you're going to be re-ordering the items.</p>
+            <ul x-data="{ colors: [
+                { id: 1, label: 'Red' },
+                { id: 2, label: 'Orange' },
+                { id: 3, label: 'Yellow' },
+            ]}">
+                <template x-for="color in colors" :key="color.id">
+                    <li x-text="color.label"></li>
+                </template>
+            </ul>
+
+            <script type="text/plain" class="language-markup max-w-[640px]">
+                <ul x-data="{ colors: [
+                    { id: 1, label: 'Red' },
+                    { id: 2, label: 'Orange' },
+                    { id: 3, label: 'Yellow' },
+                ]}">
+                    <template x-for="color in colors" :key="color.id">
+                        <li x-text="color.label"></li>
+                    </template>
+                </ul>
+            </script>
+        </div>
     </div>
 </x-layout>

@@ -27,15 +27,72 @@
             </script>
         </div>
 
+
+
+
         <div class="mt-10 mb-5">
-            <div class="flex items-center mb-5 -ml-10">
-                <img src="{{ asset('images/hashtag.png') }}" class="w-8 h-8 mr-2" alt="My Image">
-                <p class="text-3xl">Binding multiple classes</p>
-            </div>
-            <p>Not sure of the best way to bind multiple classes</p>
             <div class="flex items-center my-5 -ml-6">
                 <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
-                <p class="text-xl">Using CSS</p>
+                <p class="text-xl">Example 2</p>
+            </div>
+            <p class="mb-5">Binding a class within x-for loop</p>
+            <div x-data="{ colors: ['red', 'blue', 'green', ] }">
+                <template x-for="color in colors">
+                    <div class="h-24 w-24 inline-block" x-bind:class="color">
+                    </div>
+                </template>
+            </div>
+        
+            <style>
+                .red {
+                    background-color: red;
+                }
+                .green {
+                    background-color: green;
+                }
+                .blue {
+                    background-color: blue;
+                }
+            </style>
+
+            <script type="text/plain" class="language-markup max-w-[640px]">
+                <div x-data="{ colors: ['red', 'green', 'blue'] }">
+                    <template x-for="color in colors">
+                        <div class="h-24 w-24 inline-block" x-bind:class="color">
+                        </div>
+                    </template>
+                </div>
+            </script>
+        </div>
+
+
+        <div class="mt-10 mb-5">
+            <div class="flex items-center my-5 -ml-6">
+                <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
+                <p class="text-xl">Binding Styles</p>
+            </div>
+            <p class="mb-5">Same as above but binding styles instead of classes</p>
+            <div x-data="{ colors: ['red', 'green', 'blue'] }">
+                <template x-for="color in colors" :key="color">
+                <div x-bind:style="`background-color: ${color}`" class="h-24 w-24 inline-block"></div>
+                </template>
+            </div>
+              
+
+            <script type="text/plain" class="language-markup max-w-[640px]">
+                <div x-data="{ colors: ['red', 'green', 'blue'] }">
+                    <template x-for="color in colors" :key="color">
+                    <div x-bind:style="`background-color: ${color}`">
+                    </div>
+                    </template>
+                </div>
+            </script>
+        </div>
+
+        <div class="mt-10 mb-5">
+            <div class="flex items-center my-5 -ml-6">
+                <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
+                <p class="text-xl">Bind Multiple Classes</p>
               </div>
             <p class="my-4">Looks like you can use an array if you're using regular CSS</p>
             <div x-data="{clicked: false}" class="my-4">
@@ -85,46 +142,39 @@
         </div>
         
 
-        <div class="my-5">
-            <div class="flex items-center my-5 -ml-6">
-                <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
-                <p class="text-xl">Using Tailwind</p>
-            </div>
+
+
+
+
+
+
+
+    <div class="mt-10 mb-5">
+        <div class="flex items-center my-5 -ml-6">
+            <img src="{{ asset('images/hashtag.png') }}" class="w-4 h-4 mr-2" alt="My Image">
+            <p class="text-xl">Using Tailwind</p>
         </div>
-
-
-
-
-
-
-    <div x-data="{ open: false }">
-        <button
-            x-bind:class="{ ['text-blue-500', 'bg-purple-500']: open, 'text-gray-500': !open }"
-            x-on:click="open = !open">
-            Toggle
-        </button>
+        <p>x-bind is most often useful for setting specific classes on an element based on your Alpine state.</p>
+        <div x-data="{ open: false }">
+            <button
+                x-bind:class="{ 'text-black bg-yellow-500': open, 'text-gray-500': !open }"
+                x-on:click="open = !open">
+                Toggle
+            </button>
+        </div>
+        <script type="text/plain" class="language-markup max-w-[640px]">
+            <div x-data="{ open: false }">
+                <button
+                    x-bind:class="{ 
+                        'text-black bg-yellow-500': open, 
+                        'text-gray-500': !open 
+                    }"
+                    x-on:click="open = !open">
+                    Toggle
+                </button>
+            </div>
+        </script>
     </div>
-
-
-    <div x-data="{ open: false }">
-        <button
-            x-bind:class="{ ...(open ? ['text-blue-500', 'bg-purple-500'] : ['text-gray-500']), }"
-            x-on:click="open = !open">
-            Toggle
-        </button>
-    </div>
-
-    <div x-data="{ open: false }">
-        <button
-            x-bind:class="{ 'text-black': open, 'bg-yellow-500': open, 'text-gray-500': !open }"
-            x-on:click="open = !open">
-            Toggle
-        </button>
-    </div>
-
-
-
-
     
       
       
