@@ -47,6 +47,13 @@
                     </li>
                 </a>
 
+                <a href="/modal">
+                    <li class="col-span-1 rounded-lg bg-white text-center p-8 hover:bg-gray-300">
+                        <p class="text-lg font-medium text-gray-900">x-modal</p>
+                        <p class="text-xs font-medium text-gray-900"></p>       
+                    </li>
+                </a>
+
                 <a href="/x-show">
                     <li class="col-span-1 rounded-lg bg-white text-center p-8 hover:bg-gray-300">
                         <p class="text-lg font-medium text-gray-900">x-show</p>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 
@@ -8,7 +9,11 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    return view('test');
+    $users = User::all();
+
+    return view('test', [
+        'users' => $users, 
+    ]);
 });
 
 Route::get('/x-data', function () {
@@ -75,16 +80,19 @@ Route::get('/x-ignore', function () {
 
 
 
-
+Route::get('/dropdown', function () {
+    return view('projects/dynamic-dropdown');
+});
 
 Route::get('/faq', function () {
     return view('projects/faq');
+});
+
+Route::get('/modal', function () {
+    return view('projects/modal');
 });
 
 Route::get('/rating', function () {
     return view('projects/rating');
 });
 
-Route::get('/dropdown', function () {
-    return view('projects/dynamic-dropdown');
-});
