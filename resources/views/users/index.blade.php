@@ -4,7 +4,7 @@
         <thead>
             <tr class="text-left font-medium">
                 <th class="px-4 py-2">Name</th>
-                <th class="px-4 py-2">Number</th>
+                <th class="px-4 py-2">Year</th>
                 <th class="px-4 py-2">Age</th>
             </tr>
         </thead>
@@ -12,8 +12,8 @@
             <template x-for="user in users">
                 <tr class="text-left">
                     <td class="border px-4 py-2" x-text="user.name"></td>
-                    <td class="border px-4 py-2" x-text="user.number"
-                        x-bind:class="getBackgroundColor(user.number, 'number')">
+                    <td class="border px-4 py-2" x-text="user.year"
+                        x-bind:class="getBackgroundColor(user.year, 'year')">
                     </td>
                     <td class="border px-4 py-2" x-text="user.age"
                         x-bind:class="getBackgroundColor(user.age, 'age')">
@@ -36,28 +36,30 @@
                 return percentiles;
             }
 
-            let numbers = @json($users).map(user => user.number);
-            let numberPercentiles = calculatePercentiles(numbers);
-
             let ages = @json($users).map(user => user.age);
             let agePercentiles = calculatePercentiles(ages);
-            
-    
+
+            let years = @json($users).map(user => user.year);
+            let yearPercentiles = calculatePercentiles(years);
+
+            let percentiles = {
+                age: agePercentiles,
+                year: yearPercentiles
+            };
+
             Alpine.data('usersTable', () => ({
                 users: @json($users),
-                numberPercentiles: numberPercentiles,
-                agePercentiles: agePercentiles,
 
                 getBackgroundColor(number, column) {
-                    let percentiles = column === 'number' ? this.numberPercentiles : this.agePercentiles;
+                    let columnPercentiles = percentiles[column];
 
-                    if (number >= percentiles[3]) {
+                    if (number >= columnPercentiles[3]) {
                         return 'bg-green-500';
-                    } else if (number >= percentiles[2] && number < percentiles[3]) {
+                    } else if (number >= columnPercentiles[2] && number < columnPercentiles[3]) {
                         return 'bg-green-400';
-                    } else if (number >= percentiles[1] && number < percentiles[2]) {
+                    } else if (number >= columnPercentiles[1] && number < columnPercentiles[2]) {
                         return 'bg-green-300';
-                    } else if (number >= percentiles[0] && number < percentiles[1]) {
+                    } else if (number >= columnPercentiles[0] && number < columnPercentiles[1]) {
                         return 'bg-green-200';
                     } else {
                         return 'bg-green-100';

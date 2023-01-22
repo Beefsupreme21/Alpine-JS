@@ -19,7 +19,8 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'number' => fake()->numberBetween(1, 100),
+            'year' => fake()->numberBetween(1900, 2023),
+            'age' => fake()->numberBetween(100, 500),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password

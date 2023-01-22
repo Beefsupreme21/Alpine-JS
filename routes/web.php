@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 
 Route::get('/', function () {
@@ -16,52 +17,54 @@ Route::get('/test', function () {
     ]);
 });
 
+Route::resource('/users', UserController::class);
+
 Route::get('/x-data', function () {
-    return view('methods/x-data');
+    return view('methods.x-data');
 });
 
 Route::get('/x-bind', function () {
-    return view('methods/x-bind');
+    return view('methods.x-bind');
 });
 
 Route::get('/x-on', function () {
-    return view('methods/x-on');
+    return view('methods.x-on');
 });
 
 Route::get('/x-text', function () {
-    return view('methods/x-text');
+    return view('methods.x-text');
 });
 
 Route::get('/x-html', function () {
-    return view('methods/x-html');
+    return view('methods.x-html');
 });
 
 Route::get('/x-model', function () {
-    return view('methods/x-model');
+    return view('methods.x-model');
 });
 
 Route::get('/x-show', function () {
-    return view('methods/x-show');
+    return view('methods.x-show');
 });
 
 Route::get('/x-transition', function () {
-    return view('methods/x-transition');
+    return view('methods.x-transition');
 });
 
 Route::get('/x-for', function () {
-    return view('methods/x-for');
+    return view('methods.x-for');
 });
 
 Route::get('/x-if', function () {
-    return view('methods/x-if');
+    return view('methods.x-if');
 });
 
 Route::get('/x-init', function () {
-    return view('methods/x-init');
+    return view('methods.x-init');
 });
 
 Route::get('/x-effect', function () {
-    return view('methods/x-effect');
+    return view('methods.x-effect');
 });
 
 Route::get('/x-ref', function () {
