@@ -19,63 +19,63 @@ Route::get('/test', function () {
 
 Route::resource('/users', UserController::class);
 
-Route::get('/x-data', function () {
+Route::get('/directives/x-data', function () {
     return view('methods.x-data');
 });
 
-Route::get('/x-bind', function () {
+Route::get('/directives/x-bind', function () {
     return view('methods.x-bind');
 });
 
-Route::get('/x-on', function () {
+Route::get('/directives/x-on', function () {
     return view('methods.x-on');
 });
 
-Route::get('/x-text', function () {
+Route::get('/directives/x-text', function () {
     return view('methods.x-text');
 });
 
-Route::get('/x-html', function () {
+Route::get('/directives/x-html', function () {
     return view('methods.x-html');
 });
 
-Route::get('/x-model', function () {
+Route::get('/directives/x-model', function () {
     return view('methods.x-model');
 });
 
-Route::get('/x-show', function () {
+Route::get('/directives/x-show', function () {
     return view('methods.x-show');
 });
 
-Route::get('/x-transition', function () {
+Route::get('/directives/x-transition', function () {
     return view('methods.x-transition');
 });
 
-Route::get('/x-for', function () {
+Route::get('/directives/x-for', function () {
     return view('methods.x-for');
 });
 
-Route::get('/x-if', function () {
+Route::get('/directives/x-if', function () {
     return view('methods.x-if');
 });
 
-Route::get('/x-init', function () {
+Route::get('/directives/x-init', function () {
     return view('methods.x-init');
 });
 
-Route::get('/x-effect', function () {
+Route::get('/directives/x-effect', function () {
     return view('methods.x-effect');
 });
 
-Route::get('/x-ref', function () {
+Route::get('/directives/x-ref', function () {
     return view('methods/x-ref');
 });
 
-Route::get('/x-cloak', function () {
+Route::get('/directives/x-cloak', function () {
     return view('methods/x-cloak');
 });
 
-Route::get('/x-ignore', function () {
+Route::get('/directives/x-ignore', function () {
     return view('methods/x-ignore');
 });
 
@@ -83,19 +83,30 @@ Route::get('/x-ignore', function () {
 
 
 
-Route::get('/dropdown', function () {
+Route::get('/projects', function () {
+    return view('home');
+});
+
+Route::get('projects/dropdown', function () {
     return view('projects/dynamic-dropdown');
 });
 
-Route::get('/faq', function () {
+Route::get('projects/expense-tracker', function () {
+    return view('projects/expense-tracker');
+});
+
+Route::get('projects/faq', function () {
     return view('projects/faq');
 });
 
-Route::get('/modal', function () {
+Route::get('projects/modal', function () {
     return view('projects/modal');
 });
 
-Route::get('/rating', function () {
+Route::get('projects/rating', function () {
     return view('projects/rating');
 });
 
+Route::get('projects/todo-list', function () {
+    return view('projects/todo-list');
+});

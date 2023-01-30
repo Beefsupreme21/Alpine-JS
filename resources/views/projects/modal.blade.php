@@ -9,10 +9,10 @@
             <p>Click to the buttton to turn it to true</p>
 
             <div x-data="{ showModal: false }">
-                <button @click="showModal = true" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Open Modal</button>
-                <div x-show="showModal" @click.away="showModal = false" x-cloak>
+                <button x-on:click="showModal = true">Open Modal</button>
+                <div x-show="showModal" x-on:click.away="showModal = false" x-cloak>
                     <div class="fixed inset-0 z-50 flex justify-center items-center px-4 py-8 bg-gray-900 bg-opacity-75">
-                        <div @click.away="showModal = false" class="relative max-w-md rounded-lg shadow-xl">
+                        <div x-on:click.away="showModal = false" class="relative max-w-md rounded-lg shadow-xl">
                             <div class="rounded-lg shadow-lg overflow-hidden">
                                 <div class="bg-white p-4">
                                     <p class="text-lg font-bold text-gray-800 mb-4">Model Text</p>
