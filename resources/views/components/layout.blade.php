@@ -10,6 +10,8 @@
         <script src="//unpkg.com/alpinejs" defer></script>
         <link rel="stylesheet" href="{{ asset('prism.css') }}">
         <link rel="stylesheet" href="{{ asset('style.css') }}">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
     </head>
 
     <main x-data="{ open: false }">

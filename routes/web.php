@@ -107,6 +107,14 @@ Route::get('projects/rating', function () {
     return view('projects/rating');
 });
 
+Route::get('projects/sort', function () {
+    $users = User::all();
+    
+    return view('projects/sort', [
+        'users' => $users, 
+    ]);
+});
+
 Route::get('projects/todo-list', function () {
     return view('projects/todo-list');
 });
