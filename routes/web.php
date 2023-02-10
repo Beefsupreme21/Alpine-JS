@@ -87,6 +87,10 @@ Route::get('/projects', function () {
     return view('home');
 });
 
+Route::get('projects/calculator', function () {
+    return view('projects/calculator');
+});
+
 Route::get('projects/dropdown', function () {
     return view('projects/dynamic-dropdown');
 });
