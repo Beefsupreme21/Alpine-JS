@@ -122,3 +122,7 @@ Route::get('projects/sort', function () {
 Route::get('projects/todo-list', function () {
     return view('projects/todo-list');
 });
+
+Route::get('projects/weather', function () {
+    return view('projects/weather');
+});
