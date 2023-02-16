@@ -49,7 +49,6 @@
                         <div x-text="getDayOfWeek(day)"></div>
                         <span class="text-2xl" x-text="Math.round(weather.daily.temperature_2m_max[index])"></span>
                         <span class="text-2xl">&deg;</span>
-
                     </div>
                 </div>
             </template>

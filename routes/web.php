@@ -107,6 +107,10 @@ Route::get('projects/modal', function () {
     return view('projects/modal');
 });
 
+Route::get('projects/quiz', function () {
+    return view('projects/quiz');
+});
+
 Route::get('projects/rating', function () {
     return view('projects/rating');
 });
