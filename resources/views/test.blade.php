@@ -1,70 +1,83 @@
-<x-layout>     
-
-    <table x-data="usersTable" class="table-auto w-full text-black bg-white">
-        <thead>
-            <tr class="text-left font-medium">
-                <th class="px-4 py-2">Name</th>
-                <th class="px-4 py-2">Number</th>
-                <th class="px-4 py-2">Age</th>
-            </tr>
-        </thead>
-        <tbody>
-            <template x-for="user in users">
-                <tr class="text-left">
-                    <td class="border px-4 py-2" x-text="user.name"></td>
-                    <td class="border px-4 py-2" x-text="user.number"
-                        x-bind:class="getBackgroundColor(user.number, 'number')">
-                    </td>
-                    <td class="border px-4 py-2" x-text="user.age"
-                        x-bind:class="getBackgroundColor(user.age, 'age')">
-                    </td>                
-                </tr>
-            </template>
-        </tbody>
-    </table>
-
+<x-layout>
+    <div x-data="quizData()">
+        <template x-if="!currentQuestion">
+            <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded" x-on:click="startQuiz()">Start Quiz</button>
+        </template>
+        <template x-if="currentQuestion && !showResults">
+            <div>
+                <h2 class="text-lg font-medium mb-2" x-text="'Question ' + (currentQuestionIndex + 1) + ' of ' + questions.length"></h2>
+                <p class="mb-4" x-text="currentQuestion.text"></p>
+                <div class="grid grid-cols-2 gap-4">
+                    <template x-for="(answer, index) in currentQuestion.answers">
+                        <div class="my-2 rounded-lg border border-gray-400 px-4 py-2 text-center cursor-pointer" x-on:click="selectedAnswer = index" :class="{ 'bg-blue-500 text-white': selectedAnswer === index, 'bg-gray-200': selectedAnswer !== index }">
+                            <span x-text="answer.text"></span>
+                        </div>
+                    </template>
+                </div>
+                <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4" x-on:click="confirmAnswer()">Confirm Answer</button>
+            </div>
+        </template>      
+        <template x-if="showResults">
+            <div>
+                <h2 class="text-lg font-medium mb-2" x-text="'Quiz Results'"></h2>
+                <p class="mb-4">You got <span class="font-medium" x-text="correctAnswers"></span> out of <span class="font-medium" x-text="questions.length"></span> questions correct! (<span x-text="Math.round(correctAnswers / questions.length * 100)"></span>%)</p>
+                <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded" x-on:click="restartQuiz()">Retry Quiz</button>
+            </div>
+        </template>
+    </div>
+      
     <script>
-        document.addEventListener('alpine:init', () => {
-            function calculatePercentiles(numbers) {
-                let sorted = numbers.sort((a, b) => a - b);
-                let percentiles = [];
+        function quizData() {
+            return {
+                questions: @json($questions),
+                currentQuestionIndex: 0,
+                currentQuestion: null,
+                selectedAnswer: null,
+                correctAnswers: 0,
+                showResults: false,
 
-                for (let i = 1; i <= 4; i++) {
-                    let percentileIndex = Math.floor(numbers.length * (i / 5)) - 1;
-                    percentiles[i - 1] = numbers[percentileIndex];
-                }
-                return percentiles;
-            }
-
-            let numbers = @json($users).map(user => user.number);
-            let numberPercentiles = calculatePercentiles(numbers);
-
-            let ages = @json($users).map(user => user.age);
-            let agePercentiles = calculatePercentiles(ages);
-            
+                getAnswers(question) {
+                    return question.answers;
+                },
     
-            Alpine.data('usersTable', () => ({
-                users: @json($users),
-                numberPercentiles: numberPercentiles,
-                agePercentiles: agePercentiles,
-
-                getBackgroundColor(number, column) {
-                    let percentiles = column === 'number' ? this.numberPercentiles : this.agePercentiles;
-
-                    if (number >= percentiles[3]) {
-                        return 'bg-green-500';
-                    } else if (number >= percentiles[2] && number < percentiles[3]) {
-                        return 'bg-green-400';
-                    } else if (number >= percentiles[1] && number < percentiles[2]) {
-                        return 'bg-green-300';
-                    } else if (number >= percentiles[0] && number < percentiles[1]) {
-                        return 'bg-green-200';
+                nextQuestion() {
+                    if (this.currentQuestionIndex < this.questions.length - 1) {
+                        this.currentQuestionIndex++;
+                        this.currentQuestion = this.questions[this.currentQuestionIndex];
+                        this.currentQuestion.answers = this.getAnswers(this.currentQuestion);
+                        this.selectedAnswer = null;
                     } else {
-                        return 'bg-green-100';
+                        this.showResults = true;
                     }
                 },
-            }))
-        });
-    </script>
+        
+                confirmAnswer() {
+                    if (this.selectedAnswer === null) {
+                        alert("Please select an answer!");
+                        return;
+                    }
+                    if (this.currentQuestion.answers[this.selectedAnswer].is_correct) {
+                        this.correctAnswers++;
+                    }
+                    this.nextQuestion();
+                },
+                
+                startQuiz() {
+                    this.currentQuestion = this.questions[0];
+                },
+
+                restartQuiz() {
+                    this.currentQuestionIndex = 0;
+                    this.currentQuestion = null;
+                    this.selectedAnswer = null;
+                    this.correctAnswers = 0;
+                    this.showResults = false;
+                },
     
+                get percentageCorrect() {
+                    return Math.round((this.correctAnswers / this.questions.length) * 100);
+                },
+            };
+        }
+    </script>
 </x-layout>

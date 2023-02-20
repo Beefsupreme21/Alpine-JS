@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Question;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -10,10 +11,10 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    $users = User::all();
+    $questions = Question::with('answers')->get();
 
     return view('test', [
-        'users' => $users, 
+        'questions' => $questions, 
     ]);
 });
 
