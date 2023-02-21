@@ -108,6 +108,10 @@ Route::get('projects/modal', function () {
     return view('projects/modal');
 });
 
+Route::get('projects/pokemon', function () {
+    return view('projects/pokemon');
+});
+
 Route::get('projects/quiz', function () {
     return view('projects/quiz');
 });
