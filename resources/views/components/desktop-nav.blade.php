@@ -86,11 +86,17 @@
                     <a href="/projects/modal" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
                         Modal
                     </a>
-                    <a href="/projects/pokemon" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
-                        Pokemon
+                    <a href="/projects/pokemon-list" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
+                        Pokemon List
+                    </a>
+                    <a href="/projects/pokemon-quiz" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
+                        Pokemon Quiz
                     </a>
                     <a href="/projects/quiz" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
                         Quiz
+                    </a>
+                    <a href="/projects/quiz-with-database" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
+                        Quiz with Database
                     </a>
                     <a href="/projects/sort" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
                         Sort/Filter

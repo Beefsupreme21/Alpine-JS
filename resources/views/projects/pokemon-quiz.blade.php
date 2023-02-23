@@ -12,32 +12,12 @@
                 </div>
             </template>
         </div>
-        
-        <ul class="divide-y divide-gray-300 p-4">
-            <template x-for="pokemon in pokemons" :key="pokemon.name">
-                <li class="py-4">
-                    <div class="flex items-center justify-between">
-                        <h2 class="text-lg font-medium capitalize text-white">
-                            <span x-text="pokemon.name"></span>
-                        </h2>
-                        <div class="flex">
-                            <template x-for="type in pokemon.types" :key="type.type.name">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium capitalize bg-gray-200" 
-                                    x-bind:class='getTextColor(type.type.name)'
-                                    x-text="type.type.name">
-                                </span>
-                            </template>
-                        </div>
-                    </div>
-                </li>
-            </template>
-        </ul>
     </div>
       
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('pokemon', () => ({
-                pokemons: null,
+                pokemons: [],
                 randomType: null,
                 selectedPokemon: [],
 
@@ -66,49 +46,6 @@
                                     });
                                 });
                         });
-                },
-
-                getTextColor(type) {
-                    switch (type) {
-                        case 'normal':
-                        return 'text-gray-400';
-                        case 'fire':
-                        return 'text-red-500';
-                        case 'water':
-                        return 'text-blue-500';
-                        case 'electric':
-                        return 'text-yellow-500';
-                        case 'grass':
-                        return 'text-green-500';
-                        case 'ice':
-                        return 'text-blue-200';
-                        case 'fighting':
-                        return 'text-red-700';
-                        case 'poison':
-                        return 'text-purple-500';
-                        case 'ground':
-                        return 'text-yellow-700';
-                        case 'flying':
-                        return 'text-indigo-500';
-                        case 'psychic':
-                        return 'text-pink-500';
-                        case 'bug':
-                        return 'text-green-700';
-                        case 'rock':
-                        return 'text-yellow-500';
-                        case 'ghost':
-                        return 'text-purple-700';
-                        case 'dragon':
-                        return 'text-purple-500';
-                        case 'dark':
-                        return 'text-gray-800';
-                        case 'steel':
-                        return 'text-gray-500';
-                        case 'fairy':
-                        return 'text-pink-300';
-                        default:
-                        return 'text-gray-400';
-                    }
                 },
             }))
         })

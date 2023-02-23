@@ -11,11 +11,7 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    $questions = Question::with('answers')->get();
-
-    return view('test', [
-        'questions' => $questions, 
-    ]);
+    return view('test');
 });
 
 Route::resource('/users', UserController::class);
@@ -108,12 +104,24 @@ Route::get('projects/modal', function () {
     return view('projects/modal');
 });
 
-Route::get('projects/pokemon', function () {
-    return view('projects/pokemon');
+Route::get('projects/pokemon-list', function () {
+    return view('projects/pokemon-list');
+});
+
+Route::get('projects/pokemon-quiz', function () {
+    return view('projects/pokemon-quiz');
 });
 
 Route::get('projects/quiz', function () {
     return view('projects/quiz');
+});
+
+Route::get('projects/quiz-with-database', function () {
+    $questions = Question::with('answers')->get();
+
+    return view('projects/quiz-with-database', [
+        'questions' => $questions, 
+    ]);
 });
 
 Route::get('projects/rating', function () {
