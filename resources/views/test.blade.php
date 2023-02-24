@@ -1,20 +1,28 @@
 <x-layout>
-    <div x-data="pokemon" x-init="fetchPokemon()">
+    <div x-data="pokemon" x-init="fetchPokemon()" class="text-white">
         <template x-if="!currentQuestionIndex">
-            <button x-on:click="startQuiz(count)" class="px-4 py-2 bg-gray-700 text-white rounded-md">Start Quiz</button>
+            <button x-on:click="startQuiz(count)">Start Quiz</button>
         </template>
-        <template x-for="(pokemonData, index) in selectedPokemon" :key="index" x-show="currentQuestionIndex === index">
-            <div x-show="pokemonData" class="mt-4">
-                <h2 class="text-lg font-medium mb-2" x-text="'Question ' + (currentQuestionIndex + 1) + ' of ' + questions.length"></h2>
-                <p class="mb-4" x-text="'Selected type: ' + pokemonData.randomType"></p>
-                <div class="grid grid-cols-2 gap-4">
-                    <template x-for="pokemon in pokemonData.selectedPokemon" :key="pokemon.name">
-                        <div class="my-2 rounded-lg border border-gray-400 px-4 py-2 text-center cursor-pointer" x-on:click="selectedAnswer = pokemon.name" :class="{ 'bg-blue-500 text-white': selectedAnswer === pokemon.name, 'bg-gray-200': selectedAnswer !== pokemon.name }">
-                            <span x-text="pokemon.name"></span>
-                        </div>
-                    </template>
-                </div>
-                <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4" x-on:click="confirmAnswer()">Confirm Answer</button>
+        <template x-if="currentQuestionIndex !== null && !showResults">
+            <div>
+                <h2 x-text="'Question ' + (currentQuestionIndex + 1) + ' of ' + count"></h2>
+                <p x-text="'Selected type: ' + selectedPokemon[currentQuestionIndex].randomType"></p>
+                <template x-for="pokemon in selectedPokemon[currentQuestionIndex].selectedPokemon" :key="pokemon.name">
+                    <div class="cursor-pointer" 
+                        x-on:click="selectedAnswer = pokemon.name; console.log('selectedAnswer:', selectedAnswer)" 
+                        :class="{ 'bg-blue-500 text-white': selectedAnswer === pokemon.name, 'bg-gray-700': selectedAnswer !== pokemon.name }"
+                        >
+                        <span x-text="pokemon.name"></span>
+                    </div>
+                </template>
+                <button x-on:click="confirmAnswer()">Confirm Answer</button>
+            </div>
+        </template>
+        <template x-if="showResults">
+            <div>
+                <h2 class="text-lg font-medium mb-2" x-text="'Quiz Results'"></h2>
+                <p class="mb-4">You got <span class="font-medium" x-text="correctAnswers"></span> out of <span class="font-medium" x-text="count"></span> questions correct!</p>
+                <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded" x-on:click="restartQuiz()">Retry Quiz</button>
             </div>
         </template>
     </div>
@@ -26,9 +34,9 @@
                 selectedPokemon: [],
                 count: 5,
                 selectedAnswer: null,
-                currentQuestion: null,
                 correctAnswers: 0,
-                currentQuestionIndex: 0,
+                currentQuestionIndex: null,
+                showResults: false, 
 
                 async getRandomPokemon() {
                     const types = this.pokemons.flatMap(pokemon => pokemon.types.map(type => type.type.name));
@@ -45,15 +53,17 @@
                         selectedPokemon: [randomTypePokemon, randomNonTypePokemon1, randomNonTypePokemon2, randomNonTypePokemon3]
                     };
                 },
-    
+
                 async startQuiz(count) {
                     this.selectedPokemon = [];
                     for (let i = 0; i < count; i++) {
                         const result = await this.getRandomPokemon();
+                        result.index = i + 1;
                         this.selectedPokemon.push(result);
                     }
+                    this.currentQuestionIndex = 0;
                 },
-    
+
                 fetchPokemon() {
                     axios.get('https://pokeapi.co/api/v2/pokemon?limit=150')
                         .then(response => {
@@ -69,7 +79,6 @@
 
                 nextQuestion() {
                     if (this.currentQuestionIndex < this.count - 1) {
-                        this.currentQuestion = this.selectedPokemon[this.currentQuestionIndex];
                         this.currentQuestionIndex++;
                         this.selectedAnswer = null;
                     } else {
@@ -78,17 +87,18 @@
                 },
 
                 confirmAnswer() {
+                    console.log('confirmedAnswer:', this.selectedAnswer)
                     if (this.selectedAnswer === null) {
                         alert("Please select an answer!");
                         return;
                     }
-                    if (this.currentQuestion.answers[this.selectedAnswer] === this.currentQuestion.correctAnswer) {
+                    if (this.selectedPokemon[this.currentQuestionIndex].selectedPokemon.find(pokemon => pokemon.name === this.selectedAnswer).types.some(type => type.type.name === this.selectedPokemon[this.currentQuestionIndex].randomType)) {
                         this.correctAnswers++;
                     }
                     this.nextQuestion();
                 },
             }))
-        })
+        });
     </script>
     
 </x-layout>
