@@ -1,15 +1,16 @@
 <x-layout>
     <div x-data="pokemon" x-init="fetchPokemon()" class="text-white">
-        <template x-if="!currentQuestionIndex">
+        <p x-text="timer.toFixed(2)"></p>
+        <div x-show="currentQuestionIndex === null">
             <button x-on:click="startQuiz(count)">Start Quiz</button>
-        </template>
+        </div>
         <template x-if="currentQuestionIndex !== null && !showResults">
             <div>
                 <h2 x-text="'Question ' + (currentQuestionIndex + 1) + ' of ' + count"></h2>
                 <p x-text="'Selected type: ' + selectedPokemon[currentQuestionIndex].randomType"></p>
                 <template x-for="pokemon in selectedPokemon[currentQuestionIndex].selectedPokemon" :key="pokemon.name">
                     <div class="cursor-pointer" 
-                        x-on:click="selectedAnswer = pokemon.name; console.log('selectedAnswer:', selectedAnswer)" 
+                        x-on:click="selectedAnswer = pokemon.name" 
                         :class="{ 'bg-blue-500 text-white': selectedAnswer === pokemon.name, 'bg-gray-700': selectedAnswer !== pokemon.name }"
                         >
                         <span x-text="pokemon.name"></span>
@@ -22,7 +23,7 @@
             <div>
                 <h2 class="text-lg font-medium mb-2" x-text="'Quiz Results'"></h2>
                 <p class="mb-4">You got <span class="font-medium" x-text="correctAnswers"></span> out of <span class="font-medium" x-text="count"></span> questions correct!</p>
-                <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded" x-on:click="restartQuiz()">Retry Quiz</button>
+                <a href="/test" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">Retry Quiz</a>
             </div>
         </template>
     </div>
@@ -32,11 +33,13 @@
             Alpine.data('pokemon', () => ({
                 pokemons: [],
                 selectedPokemon: [],
-                count: 5,
+                count: 3,
                 selectedAnswer: null,
                 correctAnswers: 0,
                 currentQuestionIndex: null,
                 showResults: false, 
+                timer: 0,
+                intervalId: null,
 
                 async getRandomPokemon() {
                     const types = this.pokemons.flatMap(pokemon => pokemon.types.map(type => type.type.name));
@@ -48,20 +51,56 @@
                     const randomNonTypePokemon1 = nonTypePokemon[Math.floor(Math.random() * nonTypePokemon.length)];
                     const randomNonTypePokemon2 = nonTypePokemon[Math.floor(Math.random() * nonTypePokemon.length)];
                     const randomNonTypePokemon3 = nonTypePokemon[Math.floor(Math.random() * nonTypePokemon.length)];
+                    const selectedPokemon = [randomTypePokemon, randomNonTypePokemon1, randomNonTypePokemon2, randomNonTypePokemon3];
+
+                    for (let i = selectedPokemon.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        const temp = selectedPokemon[i];
+                        selectedPokemon[i] = selectedPokemon[j];
+                        selectedPokemon[j] = temp;
+                    };
+
                     return {
                         randomType: randomType,
-                        selectedPokemon: [randomTypePokemon, randomNonTypePokemon1, randomNonTypePokemon2, randomNonTypePokemon3]
+                        selectedPokemon: selectedPokemon
                     };
+                },
+
+                shuffleArray(array) {
+                    for (let i = array.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [array[i], array[j]] = [array[j], array[i]];
+                    }
+                    return array;
                 },
 
                 async startQuiz(count) {
                     this.selectedPokemon = [];
+                    this.elapsedTime = 0;
+                    this.startTimer();
                     for (let i = 0; i < count; i++) {
                         const result = await this.getRandomPokemon();
                         result.index = i + 1;
                         this.selectedPokemon.push(result);
                     }
                     this.currentQuestionIndex = 0;
+                    this.startTimer();
+
+                },
+
+                startTimer() {
+                    if (!this.intervalId) {
+                    this.intervalId = setInterval(() => {
+                        this.timer += 0.01;
+                    }, 10);
+                    }
+                },
+
+                pauseTimer() {
+                    if (this.intervalId) {
+                    clearInterval(this.intervalId);
+                    this.intervalId = null;
+                    }
                 },
 
                 fetchPokemon() {
@@ -83,11 +122,13 @@
                         this.selectedAnswer = null;
                     } else {
                         this.showResults = true;
+                        this.pauseTimer();
                     }
                 },
 
                 confirmAnswer() {
-                    console.log('confirmedAnswer:', this.selectedAnswer)
+                    console.log('confirmedAnswer:', this.selectedAnswer);
+                    console.log('currentQuestionIndex:', this.currentQuestionIndex);
                     if (this.selectedAnswer === null) {
                         alert("Please select an answer!");
                         return;
