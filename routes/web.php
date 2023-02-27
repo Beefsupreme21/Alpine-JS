@@ -100,6 +100,10 @@ Route::get('projects/faq', function () {
     return view('projects/faq');
 });
 
+Route::get('projects/hangman', function () {
+    return view('projects/hangman');
+});
+
 Route::get('projects/memory', function () {
     return view('projects/memory');
 });

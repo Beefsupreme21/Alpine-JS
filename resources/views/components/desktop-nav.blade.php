@@ -83,6 +83,9 @@
                     <a href="/projects/expense-tracker" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
                         Expense Tracker
                     </a>
+                    <a href="/projects/hangman" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
+                        Hangman
+                    </a>
                     <a href="/projects/memory" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
                         Memory
                     </a>
