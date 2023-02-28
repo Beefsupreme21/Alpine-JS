@@ -151,3 +151,7 @@ Route::get('projects/todo-list', function () {
 Route::get('projects/weather', function () {
     return view('projects/weather');
 });
+
+Route::get('projects/wheel-of-fortune', function () {
+    return view('projects/wheel-of-fortune');
+});
