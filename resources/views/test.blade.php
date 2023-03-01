@@ -1,145 +1,57 @@
 <x-layout>
-    <div x-data="pokemon" x-init="fetchPokemon()" class="text-white">
-        <p x-text="timer.toFixed(2)"></p>
-        <div x-show="currentQuestionIndex === null">
-            <button x-on:click="startQuiz(count)">Start Quiz</button>
+    <div x-data="game" class="text-white flex justify-center items-center h-screen">
+        <div class="grid grid-cols-12 gap-2">
+            <template x-for="i in 40">
+                <div class="h-16 w-16 flex justify-center items-center rounded-lg text-white font-bold"
+                    x-bind:class="getSquareColor(i)">
+                    <p x-text="i === 1 ? 'Start' : (i === 40 ? 'Finish' : i)"></p>
+                </div>
+            </template>
         </div>
-        <template x-if="currentQuestionIndex !== null && !showResults">
-            <div>
-                <h2 x-text="'Question ' + (currentQuestionIndex + 1) + ' of ' + count"></h2>
-                <p x-text="'Selected type: ' + selectedPokemon[currentQuestionIndex].randomType"></p>
-                <template x-for="pokemon in selectedPokemon[currentQuestionIndex].selectedPokemon" :key="pokemon.name">
-                    <div class="cursor-pointer" 
-                        x-on:click="selectedAnswer = pokemon.name" 
-                        :class="{ 'bg-blue-500 text-white': selectedAnswer === pokemon.name, 'bg-gray-700': selectedAnswer !== pokemon.name }"
-                        >
-                        <span x-text="pokemon.name"></span>
-                    </div>
-                </template>
-                <button x-on:click="confirmAnswer()">Confirm Answer</button>
-            </div>
-        </template>
-        <template x-if="showResults">
-            <div>
-                <h2 class="text-lg font-medium mb-2" x-text="'Quiz Results'"></h2>
-                <p class="mb-4">You got <span class="font-medium" x-text="correctAnswers"></span> out of <span class="font-medium" x-text="count"></span> questions correct!</p>
-                <a href="/test" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">Retry Quiz</a>
+        <button
+          x-on:click="square = square + 1"
+          class="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
+        >
+          Move
+        </button>
+      </div>
+      
+        <button x-on:click="rollDice()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+            Roll Dice
+        </button>
+        <template x-if="diceOne">
+            <div class="flex">
+                <img :src="getDice(diceOne)" class="h-16 w-16 mr-4" />
+                <img :src="getDice(diceTwo)" class="h-16 w-16" />
             </div>
         </template>
     </div>
     
+    
     <script>
         document.addEventListener('alpine:init', () => {
-            Alpine.data('pokemon', () => ({
-                pokemons: [],
-                selectedPokemon: [],
-                count: 3,
-                selectedAnswer: null,
-                correctAnswers: 0,
-                currentQuestionIndex: null,
-                showResults: false, 
-                timer: 0,
-                intervalId: null,
+            Alpine.data('game', () => ({
+                diceOne: null,
+                diceTwo: null,
+                square: 0,
 
-                async getRandomPokemon() {
-                    const types = this.pokemons.flatMap(pokemon => pokemon.types.map(type => type.type.name));
-                    const randomTypeIndex = Math.floor(Math.random() * types.length);
-                    const randomType = types[randomTypeIndex];
-                    const typePokemon = this.pokemons.filter(pokemon => pokemon.types.some(type => type.type.name === randomType));
-                    const randomTypePokemon = typePokemon[Math.floor(Math.random() * typePokemon.length)];
-                    const nonTypePokemon = this.pokemons.filter(pokemon => pokemon.types.every(type => type.type.name !== randomType));
-                    const randomNonTypePokemon1 = nonTypePokemon[Math.floor(Math.random() * nonTypePokemon.length)];
-                    const randomNonTypePokemon2 = nonTypePokemon[Math.floor(Math.random() * nonTypePokemon.length)];
-                    const randomNonTypePokemon3 = nonTypePokemon[Math.floor(Math.random() * nonTypePokemon.length)];
-                    const selectedPokemon = [randomTypePokemon, randomNonTypePokemon1, randomNonTypePokemon2, randomNonTypePokemon3];
-
-                    for (let i = selectedPokemon.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        const temp = selectedPokemon[i];
-                        selectedPokemon[i] = selectedPokemon[j];
-                        selectedPokemon[j] = temp;
-                    };
-
-                    return {
-                        randomType: randomType,
-                        selectedPokemon: selectedPokemon
-                    };
+                rollDice() {
+                    this.diceOne = Math.floor(Math.random() * 6) + 1;
+                    this.diceTwo = Math.floor(Math.random() * 6) + 1;
+                },
+    
+                getDice(roll) {
+                    return '/images/dice/dice-' + roll + '.svg';
                 },
 
-                shuffleArray(array) {
-                    for (let i = array.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [array[i], array[j]] = [array[j], array[i]];
-                    }
-                    return array;
+                getSquareColor(square) {
+                    const colors = ['bg-red-500', 'bg-purple-500', 'bg-blue-500', 'bg-green-500', 'bg-orange-500'];
+                    const index = square % colors.length;
+                    return colors[index];
                 },
-
-                async startQuiz(count) {
-                    this.selectedPokemon = [];
-                    this.elapsedTime = 0;
-                    this.startTimer();
-                    for (let i = 0; i < count; i++) {
-                        const result = await this.getRandomPokemon();
-                        result.index = i + 1;
-                        this.selectedPokemon.push(result);
-                    }
-                    this.currentQuestionIndex = 0;
-                    this.startTimer();
-
-                },
-
-                startTimer() {
-                    if (!this.intervalId) {
-                    this.intervalId = setInterval(() => {
-                        this.timer += 0.01;
-                    }, 10);
-                    }
-                },
-
-                pauseTimer() {
-                    if (this.intervalId) {
-                    clearInterval(this.intervalId);
-                    this.intervalId = null;
-                    }
-                },
-
-                fetchPokemon() {
-                    axios.get('https://pokeapi.co/api/v2/pokemon?limit=150')
-                        .then(response => {
-                            this.pokemons = response.data.results;
-                            Promise.all(this.pokemons.map(pokemon => axios.get(pokemon.url)))
-                                .then(responses => {
-                                    responses.forEach((response, i) => {
-                                        this.pokemons[i].types = response.data.types;
-                                    });
-                                });
-                        });
-                },
-
-                nextQuestion() {
-                    if (this.currentQuestionIndex < this.count - 1) {
-                        this.currentQuestionIndex++;
-                        this.selectedAnswer = null;
-                    } else {
-                        this.showResults = true;
-                        this.pauseTimer();
-                    }
-                },
-
-                confirmAnswer() {
-                    console.log('confirmedAnswer:', this.selectedAnswer);
-                    console.log('currentQuestionIndex:', this.currentQuestionIndex);
-                    if (this.selectedAnswer === null) {
-                        alert("Please select an answer!");
-                        return;
-                    }
-                    if (this.selectedPokemon[this.currentQuestionIndex].selectedPokemon.find(pokemon => pokemon.name === this.selectedAnswer).types.some(type => type.type.name === this.selectedPokemon[this.currentQuestionIndex].randomType)) {
-                        this.correctAnswers++;
-                    }
-                    this.nextQuestion();
-                },
-            }))
+            }));
         });
     </script>
     
+      
 </x-layout>
