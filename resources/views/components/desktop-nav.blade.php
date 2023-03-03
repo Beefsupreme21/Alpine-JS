@@ -69,6 +69,31 @@
                     </a>
                 @endif
 
+                <a href="/games" class="text-gray-300 text-lg hover:bg-gray-700 hover:text-[#77C1D2] flex items-center px-2 py-1 font-bold rounded-md">
+                    Games
+                </a>
+
+                @if (str_contains(request()->url(), 'games'))
+                    <a href="/games/candyland" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
+                        Candyland
+                    </a>
+                    <a href="/games/hangman" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
+                        Hangman
+                    </a>
+                    <a href="/games/pokemon-quiz" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
+                        Pokemon Quiz (API)
+                    </a>
+                    <a href="/games/quiz" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
+                        Quiz
+                    </a>
+                    <a href="/games/quiz-with-database" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
+                        Quiz (SQL Database)
+                    </a>
+                    <a href="/games/wheel-of-fortune" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
+                        Wheel of Fortune
+                    </a>
+                @endif
+
                 <a href="/projects" class="text-gray-300 text-lg hover:bg-gray-700 hover:text-[#77C1D2] flex items-center px-2 py-1 font-bold rounded-md">
                     Projects
                 </a>
@@ -83,9 +108,6 @@
                     <a href="/projects/expense-tracker" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
                         Expense Tracker
                     </a>
-                    <a href="/projects/hangman" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
-                        Hangman
-                    </a>
                     <a href="/projects/memory" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
                         Memory
                     </a>
@@ -95,15 +117,6 @@
                     <a href="/projects/pokemon-list" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
                         Pokemon List
                     </a>
-                    <a href="/projects/pokemon-quiz" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
-                        Pokemon Quiz
-                    </a>
-                    <a href="/projects/quiz" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
-                        Quiz
-                    </a>
-                    <a href="/projects/quiz-with-database" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
-                        Quiz with Database
-                    </a>
                     <a href="/projects/sort" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
                         Sort/Filter
                     </a>
@@ -112,9 +125,6 @@
                     </a>
                     <a href="/projects/weather" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
                         Weather
-                    </a>
-                    <a href="/projects/wheel-of-fortune" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
-                        Wheel of Fortune
                     </a>
                 @endif
                 <a href="/test" class="text-gray-300 text-lg hover:bg-gray-700 hover:text-[#77C1D2] flex items-center mt-8 px-2 py-1 font-bold rounded-md">

@@ -77,7 +77,37 @@ Route::get('/directives/x-ignore', function () {
 });
 
 
+Route::get('games', function () {
+    return view('home');
+});
 
+Route::get('games/candyland', function () {
+    return view('games/candyland');
+});
+
+Route::get('games/hangman', function () {
+    return view('games/hangman');
+});
+
+Route::get('games/pokemon-quiz', function () {
+    return view('games/pokemon-quiz');
+});
+
+Route::get('games/quiz', function () {
+    return view('games/quiz');
+});
+
+Route::get('games/quiz-with-database', function () {
+    $questions = Question::with('answers')->get();
+
+    return view('games/quiz-with-database', [
+        'questions' => $questions, 
+    ]);
+});
+
+Route::get('games/wheel-of-fortune', function () {
+    return view('games/wheel-of-fortune');
+});
 
 
 Route::get('/projects', function () {
@@ -100,10 +130,6 @@ Route::get('projects/faq', function () {
     return view('projects/faq');
 });
 
-Route::get('projects/hangman', function () {
-    return view('projects/hangman');
-});
-
 Route::get('projects/memory', function () {
     return view('projects/memory');
 });
@@ -116,21 +142,7 @@ Route::get('projects/pokemon-list', function () {
     return view('projects/pokemon-list');
 });
 
-Route::get('projects/pokemon-quiz', function () {
-    return view('projects/pokemon-quiz');
-});
 
-Route::get('projects/quiz', function () {
-    return view('projects/quiz');
-});
-
-Route::get('projects/quiz-with-database', function () {
-    $questions = Question::with('answers')->get();
-
-    return view('projects/quiz-with-database', [
-        'questions' => $questions, 
-    ]);
-});
 
 Route::get('projects/rating', function () {
     return view('projects/rating');
@@ -152,6 +164,3 @@ Route::get('projects/weather', function () {
     return view('projects/weather');
 });
 
-Route::get('projects/wheel-of-fortune', function () {
-    return view('projects/wheel-of-fortune');
-});
