@@ -1,45 +1,73 @@
 <x-fullscreen-layout>
     <div x-data="game" class="px-32">
-        <div style="background-image: url('/images/racetracks/Background 2-1.png'); background-repeat: no-repeat; height: 50vh;">
-            <div class="pt-44">
-                <template x-for="(horse, index) in horses">
-                    <img x-bind:src="getHorseSprite(horse)" class="h-16 w-16 -mb-8" x-bind:style="'transform: translateX(' + (horse.position) + 'px)'"/>
-                </template>
+        <div x-show="showRaceScreen">
+            <div style="background-image: url('/images/racetracks/Background 2-1.png'); background-repeat: no-repeat; height: 50vh;">
+                <div class="pt-44">
+                    <template x-for="(horse, index) in horses">
+                        <img x-bind:src="getHorseSprite(horse)" class="h-16 w-16 -mb-8" x-bind:style="'transform: translateX(' + (horse.position) + 'px)'"/>
+                    </template>
+                </div>
             </div>
-        </div>
-        <div class="container mx-auto mt-8">
-            <p class="text-center text-2xl font-bold mb-4">$<span x-text="money"></span></p>
-            <p class="text-2xl font-bold" x-text="`${timer.toFixed(2)} sec`"></p>   
-
-            <div class="flex justify-center mb-8">
+            <div x-show="!raceStarted">
+                <button class="px-4 py-2 text-lg font-bold text-white bg-blue-500 rounded hover:bg-blue-700" x-on:click="startRace()">Start</button>
+            </div>
+            <template x-if="finishedHorses.length == horses.length">
+                <button class="px-4 py-2 text-lg font-bold text-white bg-blue-500 rounded hover:bg-blue-700" x-on:click="restartRace()">Race Again</button>
+            </template>
+            <p class="text-2xl font-bold" x-text="`${timer.toFixed(2)} sec`"></p>  
+            <div class="flex justify-center">
                 <template x-for="(horse, index) in horses">
-                    <div class="mx-4 cursor-pointer" x-on:click="selectedHorse = index" x-bind:class="{ 'border border-blue-500': selectedHorse === index }">
-                        <img x-bind:src="getHorsePortrait(horse)" class="h-48 w-48 rounded-lg" />
-                        <p class="text-center font-bold mt-2 text-lg" x-text="horse.name"></p>
-                        <p class="text-center mt-1" x-text="'Odds: ' + horse.odds + ':1'"></p>
+                    <div>
                         <template x-if="winner == horse">
-                            <p class="text-center font-bold mt-2 text-lg">1st</p>
+                            <div>
+                                <p>1st</p>
+                                <p x-text="horse.name"></p>
+                                <img x-bind:src="getHorsePortrait(horse)" class="h-12 w-12 rounded-lg" />
+                                <p class="text-center mt-1" x-text="horse.odds + ':1'"></p>
+                            </div>
                         </template>
                         <template x-if="secondPlace == horse">
-                            <p class="text-center font-bold mt-2 text-lg">2nd</p>
+                            <div>
+                                <p>2nd</p>
+                                <p x-text="horse.name"></p>
+                                <img x-bind:src="getHorsePortrait(horse)" class="h-12 w-12 rounded-lg" />
+                                <p class="text-center mt-1" x-text="horse.odds + ':1'"></p>
+                            </div>
                         </template>
                         <template x-if="thirdPlace == horse">
-                            <p class="text-center font-bold mt-2 text-lg">3rd</p>
+                            <div>
+                                <p>3rd</p>
+                                <p x-text="horse.name"></p>
+                                <img x-bind:src="getHorsePortrait(horse)" class="h-12 w-12 rounded-lg" />
+                                <p class="text-center mt-1" x-text="horse.odds + ':1'"></p>
+                            </div>
                         </template>
                     </div>
                 </template>
+                
             </div>
-            <div class="flex justify-center mt-4">
-                <input class="border-2 border-gray-300 p-2 rounded-lg w-32 text-center" type="number" min="0" step="10" x-model.number="betAmount" placeholder="Bet amount" x-bind:disabled="raceStarted">
-                <button class="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" x-on:click="placeBet(selectedHorse)" x-bind:disabled="raceStarted">Place Bet</button>
+        </div>
+
+        <div x-show="showBetScreen" class="container mx-auto">
+            <div class="flex justify-evenly mb-8">
+                <div>
+                    <p class="text-2xl font-bold mb-4">$<span x-text="money"></span></p>
+                    <p class="text-2xl font-bold mb-4"><span x-text="resultsMessage"></span></p>
+                    <div class="flex justify-center mt-4">
+                        <input class="border-2 border-gray-300 p-2 rounded-lg w-32 text-center" type="number" min="0" step="10" x-model.number="betAmount" placeholder="Bet amount" x-bind:disabled="raceStarted">
+                        <button class="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" x-on:click="placeBet(selectedHorse)" x-bind:disabled="raceStarted">Place Bet</button>
+                    </div>
+                </div>
+                <div class="flex justify center">
+                    <template x-for="(horse, index) in horses">
+                        <div class="mx-4 cursor-pointer" x-on:click="selectedHorse = index" x-bind:class="{ 'border border-blue-500': selectedHorse === index }">
+                            <img x-bind:src="getHorsePortrait(horse)" class="h-36 w-36 rounded-lg" />
+                            <p class="text-center font-bold mt-2 text-lg" x-text="horse.name"></p>
+                            <p class="text-center mt-1" x-text="'Odds: ' + horse.odds + ':1'"></p>
+                        </div>
+                    </template>
+                </div>
             </div>
-            
-            <div x-show="!raceStarted" class="flex justify-center">
-                <button class="px-4 py-2 text-lg font-bold text-white bg-blue-500 rounded hover:bg-blue-700" x-on:click="startRace()">Start</button>
-            </div>
-            <template x-if="finishedHorses.length == horses.length" class="flex justify-center">
-                <button class="px-4 py-2 text-lg font-bold text-white bg-blue-500 rounded hover:bg-blue-700" x-on:click="restartRace()">Race Again</button>
-            </template>
         </div>
     </div>
     
@@ -63,6 +91,10 @@
                 selectedHorse: null,
                 betAmount: null, 
                 timer: 0,
+                bets: {},
+                resultsMessage: null, 
+                showBetScreen: true,
+                showRaceScreen: false,
 
                 startRace() {
                     this.raceStarted = true;
@@ -86,6 +118,8 @@
 
                 restartRace() {
                     this.raceStarted = false;
+                    this.showBetScreen = false,
+                    this.showRaceScreen = true,
                     this.horses.forEach((horse, index) => {
                         horse.position = 0;
                         clearInterval(horse.intervalId);
@@ -153,16 +187,17 @@
                     }
 
                     this.money -= this.betAmount;
-                    this.bets[horse.number] = this.bets[horse.number] ? this.bets[horse.number] + this.betAmount : this.betAmount;
-
+                    this.bets[this.horses[horse].number] = this.bets[this.horses[horse].number] ? this.bets[this.horses[horse].number] + this.betAmount : this.betAmount;
+                    this.showBetScreen = false,
+                    this.showRaceScreen = true,
                     this.payOut();
                 },
 
                 payOut() {
-                    if (this.selectedHorse && this.selectedHorse === this.winner) {
+                    if (this.selectedHorse !== null && this.winner !== null && this.horses[this.selectedHorse].number === this.winner.number) {
                         const payout = this.betAmount * this.horses[this.selectedHorse].odds;
                         this.money += payout;
-                        alert(`Congratulations, you have won ${payout} coins!`);
+                        this.resultsMessage = `Congratulations, you have won $${payout}!`;
                     }
                 },
     
@@ -173,7 +208,7 @@
                     clearInterval(horse.speedIntervalId);
                     this.finishedHorses.push(horse);
 
-                    if (this.finishedHorses.length > 0) {
+                    if (this.finishedHorses.length == 1) {
                         this.winner = this.finishedHorses[0];
                         this.payOut();
                         this.stopTimer();
