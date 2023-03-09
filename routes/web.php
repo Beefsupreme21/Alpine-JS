@@ -89,6 +89,10 @@ Route::get('games/hangman', function () {
     return view('games/hangman');
 });
 
+Route::get('games/horse-racing', function () {
+    return view('games/horse-racing');
+});
+
 Route::get('games/pokemon-quiz', function () {
     return view('games/pokemon-quiz');
 });
