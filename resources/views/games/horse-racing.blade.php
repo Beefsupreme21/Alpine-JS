@@ -1,35 +1,38 @@
 <x-fullscreen-layout>
-    <div x-data="game" class="px-32">
+    <div x-data="game" class="px-32 text-gray-200">
         <div x-show="showBetScreen" class="container mx-auto">
-            <div class="flex justify-evenly mb-8">
-                <div>
-                    <p class="text-2xl font-bold mb-4">Balance $<span x-text="money"></span></p>
-                    <p class="text-2xl font-bold mb-4"><span x-text="resultsMessage"></span></p>
-                    <p class="text-2xl font-bold mb-4">Selected Horse: <span x-text="getHorseName(selectedHorse)"></span></p>
-                    <div class="flex justify-center items-center">
-                        <button x-on:click="if (betAmount >= 50) { betAmount -= 50 }" class="text-gray-700 font-bold py-2 px-4 rounded-l">
-                            -
-                        </button>
-                        <span class="font-semibold text-gray-700">
-                            <span x-text="betAmount"></span>
-                        </span>
-                        <button x-on:click="if (betAmount < money) { betAmount += 50 }" class="text-gray-700 font-bold py-2 px-4 rounded-r">
-                            +
-                        </button>
-                    </div>
-                    <button x-on:click="placeBet(selectedHorse)" class="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Place Bet</button>
-                </div>
-                <div class="flex justify-center">
+            <div class="pt-16">
+                <p class="text-2xl mb-4">Balance $<span x-text="money"></span></p>
+                <p class="text-2xl text-center mb-4 font-bold">Choose Horse</p>
+                <div class="flex justify-center flex-wrap">
                     <template x-for="(horse, index) in horses">
                         <div x-on:click="selectedHorse = index" 
-                             x-bind:class="{ 'bg-gray-200': selectedHorse === index }" 
-                             class="mx-4 cursor-pointer rounded-lg p-4 transition-colors duration-200 ease-in-out">
+                             x-bind:class="{ 'bg-gray-600': selectedHorse === index }" 
+                             class="mx-4 my-2 cursor-pointer rounded-lg p-4 transition-colors duration-200 ease-in-out">
                             <img x-bind:src="getHorsePortrait(horse)" class="h-36 w-36 rounded-lg" />
                             <p class="text-center font-bold mt-2 text-lg" x-text="horse.name"></p>
                             <p class="text-center mt-1" x-text="'Odds: ' + horse.odds + ':1'"></p>
                         </div>
                     </template>
                 </div>
+                <p class="text-2xl text-center my-4 font-bold">Choose Amount</p>
+                <div class="flex justify-center items-center">
+                    <button x-on:click="if (betAmount >= 50) { betAmount -= 50 }" class="font-bold py-2 px-4 rounded-l focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                        </svg>
+                    </button>
+                    <span class="font-semibold text-3xl mx-4 w-20 text-center" x-text="betAmount"></span>
+                    <button x-on:click="if (betAmount < money) { betAmount += 50 }" class="font-bold py-2 px-4 rounded-r focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12M6 12h12" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <button x-on:click="placeBet(selectedHorse)" class="mx-auto mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none block">
+                    Place Bet
+                </button>
             </div>
         </div>
 
@@ -48,43 +51,19 @@
                 <button class="px-4 py-2 text-lg font-bold text-white bg-blue-500 rounded hover:bg-blue-700" x-on:click="restartRace()">Race Again</button>
             </template>
             <p class="text-2xl font-bold mb-4">$<span x-text="money"></span></p>
-            <p class="text-2xl font-bold mb-4">Selected Horse<span x-text="selectedHorse"></span></p>
             <p class="text-2xl font-bold mb-4">Bet $<span x-text="betAmount"></span></p>
             <p class="text-2xl font-bold mb-4">Selected Horse: <span x-text="getHorseName(selectedHorse)"></span></p>
+            <p class="text-2xl font-bold mb-4"><span x-text="resultsMessage"></span></p>
             <img x-bind:src="getHorsePortrait(selectedHorse)" class="h-12 w-12 rounded-lg" />
-              
-              
             <p class="text-2xl font-bold" x-text="`${timer.toFixed(2)} sec`"></p>  
             <div class="flex justify-center">
                 <template x-for="(horse, index) in sortedFinishedHorses">
                     <div>
-                        <template x-if="winner == horse">
-                            <div>
-                                <p>1st</p>
-                                <p x-text="horse.name"></p>
-                                <p x-text="`${horse.time.toFixed(2)} sec`"></p>
-                                <img x-bind:src="getHorsePortrait(horse)" class="h-12 w-12 rounded-lg" />
-                                <p class="text-center mt-1" x-text="horse.odds + ':1'"></p>
-                            </div>
-                        </template>
-                        <template x-if="secondPlace == horse">
-                            <div>
-                                <p>2nd</p>
-                                <p x-text="horse.name"></p>
-                                <p x-text="`${horse.time.toFixed(2)} sec`"></p>
-                                <img x-bind:src="getHorsePortrait(horse)" class="h-12 w-12 rounded-lg" />
-                                <p class="text-center mt-1" x-text="horse.odds + ':1'"></p>
-                            </div>
-                        </template>
-                        <template x-if="thirdPlace == horse">
-                            <div>
-                                <p>3rd</p>
-                                <p x-text="horse.name"></p>
-                                <p x-text="`${horse.time.toFixed(2)} sec`"></p>
-                                <img x-bind:src="getHorsePortrait(horse)" class="h-12 w-12 rounded-lg" />
-                                <p class="text-center mt-1" x-text="horse.odds + ':1'"></p>
-                            </div>
-                        </template>
+                        <p x-text="`${index + 1}th`"></p>
+                        <p x-text="horse.name"></p>
+                        <p x-text="`${horse.time.toFixed(2)} sec`"></p>
+                        <img x-bind:src="getHorsePortrait(horse)" class="h-12 w-12 rounded-lg" />
+                        <p class="text-center mt-1" x-text="horse.odds + ':1'"></p>
                     </div>
                 </template>
             </div>
@@ -96,9 +75,9 @@
             Alpine.data('game', () => ({
                 horses: [
                     { number: 1, name: 'Horsing Around', minSpeed: 3, maxSpeed: 5, position: 0, animationIndex: 1, odds: 29, time: null },
-                    { number: 2, name: 'Sir Gallopsalot', minSpeed: 3, maxSpeed: 5, position: 0, animationIndex: 1, odds: 3, time: null },
-                    { number: 3, name: 'Hoof Hearted', minSpeed: 9, maxSpeed: 9, position: 0, animationIndex: 1, odds: 5, time: null },
-                    { number: 4, name: 'Fifty Shades of Hay', minSpeed: 3, maxSpeed: 5, position: 0, animationIndex: 1, odds: 10, time: null },
+                    { number: 2, name: 'Sir Gallopsalot', minSpeed: 3, maxSpeed: 5.8, position: 0, animationIndex: 1, odds: 3, time: null },
+                    { number: 3, name: 'Hoof Hearted', minSpeed: 3, maxSpeed: 5.5, position: 0, animationIndex: 1, odds: 5, time: null },
+                    { number: 4, name: 'Bojack', minSpeed: 3, maxSpeed: 5, position: 0, animationIndex: 1, odds: 10, time: null },
                     { number: 5, name: 'Neigh Sayer', minSpeed: 3, maxSpeed: 5.2, position: 0, animationIndex: 1, odds: 15, time: null },
                     { number: 6, name: 'Thunder Hooves', minSpeed: 3, maxSpeed: 5.4, position: 0, animationIndex: 1, odds: 20, time: null },
                 ],
@@ -109,7 +88,7 @@
                 money: 500,
                 raceStarted: false,
                 selectedHorse: null,
-                betAmount: 50, 
+                betAmount: 100, 
                 timer: 0,
                 bets: {},
                 resultsMessage: null, 
@@ -117,7 +96,7 @@
                 showRaceScreen: false,
 
                 get sortedFinishedHorses() {
-                    return this.finishedHorses.slice().sort((a, b) => a.position - b.position);
+                    return this.finishedHorses.slice().sort((a, b) => a.time - b.time);
                 },
 
                 startRace() {
@@ -127,7 +106,7 @@
                         horse.speed = this.calculateSpeed(horse.minSpeed, horse.maxSpeed);
     
                         horse.intervalId = setInterval(() => {
-                            this.moveHorse(index);
+                            this.updateHorsePosition(index);
                         }, 10 + Math.random() * 10);
     
                         horse.animationIntervalId = setInterval(() => {
@@ -142,8 +121,8 @@
 
                 restartRace() {
                     this.raceStarted = false;
-                    this.showBetScreen = false,
-                    this.showRaceScreen = true,
+                    this.showBetScreen = true,
+                    this.showRaceScreen = false,
                     this.horses.forEach((horse, index) => {
                         horse.position = 0;
                         clearInterval(horse.intervalId);
@@ -155,11 +134,11 @@
                     this.secondPlace = null;
                     this.thirdPlace = null;
                     this.bets = {};
-                    this.betAmount = null;
+                    this.betAmount = 100;
                     this.timer = 0;
                 },
     
-                moveHorse(horseIndex) {
+                updateHorsePosition(horseIndex) {
                     const horse = this.horses[horseIndex];
                     horse.position += horse.speed;
                     if (horse.position >= 1400) {
@@ -227,20 +206,18 @@
 
                     if (this.finishedHorses.length == 1) {
                         this.winner = this.finishedHorses[0];
-                        this.winner.time = this.timer; // set the time property of the winner horse to the current time
                         this.payOut();
-                    } 
-                    if (this.finishedHorses.length > 1) {
-                        this.secondPlace = this.finishedHorses[1];
-                        this.secondPlace.time = this.timer; // set the time property of the second place horse to the current time
-                    }
-                    if (this.finishedHorses.length > 2) {
-                        this.thirdPlace = this.finishedHorses[2];
-                        this.thirdPlace.time = this.timer; // set the time property of the third place horse to the current time
                     } 
                     if (this.finishedHorses.length == this.horses.length) {
                         this.stopTimer();
                     } 
+
+                    horse.time = this.timer;
+                    this.horses[horseIndex].time = this.timer;
+                },
+
+                logTime(horse) {
+                    console.log(`${horse.name} finished in ${horse.time.toFixed(2)} seconds`);
                 },
             }));
         });
