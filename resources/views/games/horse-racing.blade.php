@@ -44,28 +44,37 @@
                     </template>
                 </div>
             </div>
-            <div x-show="!raceStarted">
-                <button class="px-4 py-2 text-lg font-bold text-white bg-blue-500 rounded hover:bg-blue-700" x-on:click="startRace()">Start</button>
-            </div>
-            <template x-if="finishedHorses.length == horses.length">
-                <button class="px-4 py-2 text-lg font-bold text-white bg-blue-500 rounded hover:bg-blue-700" x-on:click="restartRace()">Race Again</button>
-            </template>
-            <p class="text-2xl font-bold mb-4">$<span x-text="money"></span></p>
-            <p class="text-2xl font-bold mb-4">Bet $<span x-text="betAmount"></span></p>
-            <p class="text-2xl font-bold mb-4">Selected Horse: <span x-text="getHorseName(selectedHorse)"></span></p>
-            <p class="text-2xl font-bold mb-4"><span x-text="resultsMessage"></span></p>
-            <img x-bind:src="getHorsePortrait(selectedHorse)" class="h-12 w-12 rounded-lg" />
-            <p class="text-2xl font-bold" x-text="`${timer.toFixed(2)} sec`"></p>  
-            <div class="flex justify-center">
-                <template x-for="(horse, index) in sortedFinishedHorses">
+
+            <div class="flex justify-between">
+                <div class="flex flex-col justify-between w-1/3 pr-8">
                     <div>
-                        <p x-text="`${index + 1}th`"></p>
-                        <p x-text="horse.name"></p>
-                        <p x-text="`${horse.time.toFixed(2)} sec`"></p>
-                        <img x-bind:src="getHorsePortrait(horse)" class="h-12 w-12 rounded-lg" />
-                        <p class="text-center mt-1" x-text="horse.odds + ':1'"></p>
+                        <p class="text-2xl font-bold mb-4">$<span x-text="money"></span></p>
+                        <p class="text-2xl font-bold mb-4">Current Bet</p>
+                        <p>$<span x-text="betAmount"></span><span> on </span><span x-text="getHorseName(selectedHorse)"></span></p>
+                        <p class="text-2xl font-bold mb-4"><span x-text="resultsMessage"></span></p>
+                        <img x-bind:src="selectedHorsePortrait" class="h-12 w-12 rounded-lg" />
+                        <img x-bind:src="selectedHorseSprite" class="h-12 w-12" />
+                        <p class="text-2xl font-bold mt-4" x-text="`${timer.toFixed(2)} sec`"></p>
+                        <div x-show="!raceStarted">
+                            <button class="px-4 py-2 text-lg font-bold text-white bg-blue-500 rounded hover:bg-blue-700" x-on:click="startRace()">Start</button>
+                        </div>
+                        <template x-if="finishedHorses.length == horses.length">
+                            <button class="px-4 py-2 text-lg font-bold text-white bg-blue-500 rounded hover:bg-blue-700" x-on:click="restartRace()">Race Again</button>
+                        </template>
                     </div>
-                </template>
+                </div>
+              
+                <div class="w-1/3 mr-20">
+                    <template x-for="(horse, index) in sortedFinishedHorses">
+                        <div :class="{ 'bg-gray-800': index % 2 === 0 }" class="flex items-center justify-between px-4 py-2">
+                            <p class="font-semibold text-gray-700" x-text="`${index + 1}th`"></p>
+                            <img x-bind:src="getHorsePortrait(horse)" class="h-12 w-12 rounded-lg" />
+                            <p class="font-semibold text-gray-700" x-text="horse.name"></p>
+                            <p class="font-semibold text-gray-700" x-text="`${horse.time.toFixed(2)} sec`"></p>
+                            <p class="font-semibold text-gray-700 text-center" x-text="horse.odds + ':1'"></p>
+                        </div>
+                    </template>
+                </div>
             </div>
         </div>
     </div>
@@ -97,6 +106,34 @@
 
                 get sortedFinishedHorses() {
                     return this.finishedHorses.slice().sort((a, b) => a.time - b.time);
+                },
+
+                get selectedHorseObject() {
+                    return this.horses.find(horse => horse.number - 1 === this.selectedHorse);
+                },
+
+                get selectedHorsePortrait() {
+                    const selectedHorse = this.selectedHorseObject;
+                    if (selectedHorse) {
+                        const imageName = `Horse Character ${selectedHorse.number}-1`;
+                        return `/images/horse-portrait/${imageName}.png`;
+                    }
+                    return '';
+                },
+
+                get selectedHorseSprite() {
+                    const selectedHorse = this.selectedHorseObject;
+                    if (selectedHorse) {
+                        const imageName = `Horse ${selectedHorse.number}-01`;
+                        return `/images/horses/${imageName}.png`;
+                    }
+                    return '';
+                },
+
+
+                getHorseSprite(horse) {
+                    const imageName = `Horse ${horse.number}-${horse.animationIndex.toString().padStart(2, '0')}`;
+                    return `/images/horses/${imageName}.png`;
                 },
 
                 startRace() {
@@ -136,6 +173,7 @@
                     this.bets = {};
                     this.betAmount = 100;
                     this.timer = 0;
+                    this.resultsMessage = null;
                 },
     
                 updateHorsePosition(horseIndex) {
