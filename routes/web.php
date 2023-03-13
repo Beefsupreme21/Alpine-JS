@@ -109,6 +109,10 @@ Route::get('games/quiz-with-database', function () {
     ]);
 });
 
+Route::get('games/war', function () {
+    return view('games/war');
+});
+
 Route::get('games/wheel-of-fortune', function () {
     return view('games/wheel-of-fortune');
 });
