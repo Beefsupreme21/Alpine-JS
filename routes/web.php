@@ -81,6 +81,10 @@ Route::get('games', function () {
     return view('home');
 });
 
+Route::get('games/blackjack', function () {
+    return view('games/blackjack');
+});
+
 Route::get('games/candyland', function () {
     return view('games/candyland');
 });

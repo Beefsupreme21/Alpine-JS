@@ -74,6 +74,9 @@
                 </a>
 
                 @if (str_contains(request()->url(), 'games'))
+                    <a href="/games/blackjack" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
+                        Blackjack
+                    </a>
                     <a href="/games/candyland" class="text-gray-500 hover:bg-gray-700 hover:text-[#77C1D2] flex items-center ml-2 px-2 py-1 rounded-md">
                         Candyland
                     </a>
