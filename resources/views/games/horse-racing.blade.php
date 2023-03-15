@@ -29,7 +29,6 @@
                         </svg>
                     </button>
                 </div>
-                
                 <button x-on:click="placeBet(selectedHorse)" class="mx-auto mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none block">
                     Place Bet
                 </button>
@@ -44,7 +43,6 @@
                     </template>
                 </div>
             </div>
-
             <div class="flex justify-between">
                 <div class="flex flex-col justify-between w-1/3 pr-8">
                     <div>
@@ -63,7 +61,6 @@
                         </template>
                     </div>
                 </div>
-              
                 <div class="w-1/3 mr-20">
                     <template x-for="(horse, index) in sortedFinishedHorses">
                         <div :class="{ 'bg-gray-800': index % 2 === 0 }" class="flex items-center justify-between px-4 py-2">

@@ -5,7 +5,7 @@
                 <h2 class="mb-4 font-bold text-lg">Dealer</h2>
                 <h3 x-text="dealerHandValue" class="text-lg font-bold mb-2"></h3>
                 <template x-for="(card, index) in dealerCards">
-                    <span x-text="showCardValues[index] ? card.value + card.suit : 'X'" class="inline-block bg-white border border-gray-400 rounded-md p-1 m-1"></span>
+                    <img x-bind:src="showCardValues[index] ? getCardImage(card) : '/images/cards/back-blue.png'" class="inline-block bg-white border border-gray-400 rounded-md p-1 m-1" alt="">
                 </template>
                 <template x-if="!gameStarted" class="mt-4">
                     <button x-on:click="dealCards()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Deal Cards</button>
@@ -16,12 +16,15 @@
         <div class="flex-grow">
             <div class="text-center">
                 <h2 class="mb-4 font-bold text-lg">Player 1</h2>
-                <h3 x-text="playerOneHandValue" class="text-lg font-bold mb-2"></h3>
+                <template x-if="playerOneCards.some(card => card.value === 'A')">
+                    <span class="text-lg font-bold mb-2"><span x-text="playerOneHandValue - 10"></span> or </span>
+                </template>
+                <span x-text="playerOneHandValue" class="text-lg font-bold mb-2"></span>
                 <div>
                     <template x-for="card in playerOneCards">
-                        <span x-text="card.value + card.suit" class="inline-block bg-white border border-gray-400 rounded-md p-1 m-1"></span>
+                        <img x-bind:src="getCardImage(card)" class="inline-block bg-white border border-gray-400 rounded-md p-1 m-1" alt="">
                     </template>
-                    <div>
+                    <div x-show="gameStarted">
                         <button x-on:click="playerHit()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4">Hit</button>
                         <button x-on:click="playerStand()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 ml-4">Stand</button>
                     </div>
@@ -72,6 +75,7 @@
                     for (const suit of suits) {
                         for (const value of values) {
                             const card = {
+                                displayName: value,
                                 value,
                                 suit,
                                 points: pointValues[value],
@@ -89,6 +93,18 @@
                         [deck[i], deck[j]] = [deck[j], deck[i]];
                     }
                     return deck;
+                },
+
+                getCardImage(card) {
+                    const suitName = card.suit === '♠' ? 'spade' :
+                                    card.suit === '♣' ? 'club' :
+                                    card.suit === '♥' ? 'heart' : 'diamond';
+                    const valueName = card.displayName === 'A' ? '1' :
+                                    card.displayName === 'K' ? 'king' :
+                                    card.displayName === 'Q' ? 'queen' :
+                                    card.displayName === 'J' ? 'jack' : card.displayName;
+                    const imageName = `${suitName}_${valueName}`;
+                    return `/images/cards/${imageName}.png`;
                 },
         
                 dealCards() {

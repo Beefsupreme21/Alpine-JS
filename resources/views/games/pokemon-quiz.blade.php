@@ -25,7 +25,7 @@
             <div>
                 <h2 class="text-lg font-medium mb-2" x-text="'Quiz Results'"></h2>
                 <p class="mb-4">You got <span class="font-medium" x-text="correctAnswers"></span> out of <span class="font-medium" x-text="count"></span> questions correct!</p>
-                <a href="/test" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">Retry Quiz</a>
+                <a href="/games/pokemon-quiz" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">Retry Quiz</a>
             </div>
         </template>
     </div>

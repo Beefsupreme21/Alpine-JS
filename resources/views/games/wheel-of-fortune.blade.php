@@ -67,17 +67,9 @@
         document.addEventListener('alpine:init', () => {
             Alpine.data('wheelOfFortune', () => ({
                 phrases: [
-                    {
-                        phrase: 'caddyshack',
-                        category: 'classic movie',
-                    },
-                    {
-                        phrase: 'ghostbusters',
-                        category: 'classic movie',
-                    },                    {
-                        phrase: 'sydney opera house',
-                        category: 'landmark',
-                    },
+                    { phrase: 'caddyshack', category: 'classic movie' },
+                    { phrase: 'ghostbusters', category: 'classic movie' },                    
+                    { phrase: 'sydney opera house', category: 'landmark'},
                 ],
                 letters: "abcdefghijklmnopqrstuvwxyz".split(""),
                 maxAttempts: 6,

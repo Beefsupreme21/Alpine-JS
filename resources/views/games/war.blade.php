@@ -3,38 +3,40 @@
         <div x-show="!gameStarted">
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" x-on:click="startGame()">Start Game</button>
         </div>
-        <div x-show="gameStarted">
-            <h1 class="text-3xl font-bold mb-4">War</h1>
-            <div class="flex justify-between mb-4">
-                <div class="flex flex-col items-center border border-black">
-                    <h2 class="text-lg font-bold mb-2">Player 1</h2>
-                    <h3 class="text-xl font-bold mb-2" x-text="playerOneCards.length"></h3>
-                    <div class="text-4xl font-bold" x-show="playerOneCard">
-                      <span x-text="playerOneCard.value + playerOneCard.suit"></span>
+        <div x-show="gameStarted" class="flex justify-evenly">
+            <div>
+                <h1 class="text-3xl font-bold mb-6 text-center">War</h1>
+                <div class="flex justify-between mb-6 mr-8 bg-gray-100 p-6 rounded-lg">
+                    <div class="flex flex-col items-center border border-black bg-white p-4 rounded-lg w-1/2">
+                        <h2 class="text-lg font-bold mb-4">Player 1</h2>
+                        <h3 class="text-xl font-bold mb-4">Cards Left: <span x-text="playerOneCards.length"></span></h3>
+                        <div class="text-4xl font-bold" x-show="playerOneCard">
+                          <span x-text="playerOneCard.value + playerOneCard.suit"></span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center border border-black bg-white p-4 rounded-lg w-1/2">
+                        <h2 class="text-lg font-bold mb-4">Player 2</h2>
+                        <h3 class="text-xl font-bold mb-4">Cards Left: <span x-text="playerTwoCards.length"></span></h3>
+                        <div class="text-4xl font-bold" x-show="playerTwoCard">
+                          <span x-text="playerTwoCard.value + playerTwoCard.suit"></span>
+                        </div>
                     </div>
                 </div>
-                <div class="flex flex-col items-center border border-black">
-                    <h2 class="text-lg font-bold mb-2">Player 2</h2>
-                    <h3 class="text-xl font-bold mb-2">Cards Left: <span x-text="playerTwoCards.length"></span></h3>
-                    <div class="text-4xl font-bold" x-show="playerTwoCard">
-                      <span x-text="playerTwoCard.value + playerTwoCard.suit"></span>
-                    </div>
+                <p class="text-lg font-bold mb-4 text-center" x-text="message"></p>
+                <div x-if="tieCards.length > 0" class="tie-cards">
+                    <template x-for="card in tieCards">
+                        <div class="card">
+                            <div class="card-value" x-text="card.value"></div>
+                            <div class="card-suit" x-text="card.suit"></div>
+                        </div>
+                    </template>
+                </div>
+                <div class="flex justify-center">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" x-on:click="drawCards()">Draw</button>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" x-on:click="reset()">Reset</button>
                 </div>
             </div>
-            <div x-if="tieCards.length > 0" class="tie-cards">
-                <template x-for="card in tieCards">
-                    <div class="card">
-                        <div class="card-value" x-text="card.value"></div>
-                        <div class="card-suit" x-text="card.suit"></div>
-                    </div>
-                </template>
-            </div>
-            
-            <p class="text-lg font-bold mb-4" x-text="message"></p>
-            <div class="flex justify-center">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" x-on:click="drawCards()">Draw</button>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" x-on:click="reset()">Reset</button>
-            </div>
+
             <div class="mt-4">
                 <h2 class="text-lg font-bold mb-2">Game History</h2>
                 <ul>
@@ -49,7 +51,6 @@
                     </template>
                 </ul>
             </div>
-            
         </div>
     </div>
     
