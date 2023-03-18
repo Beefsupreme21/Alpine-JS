@@ -36,7 +36,6 @@
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" x-on:click="reset()">Reset</button>
                 </div>
             </div>
-
             <div class="mt-4">
                 <h2 class="text-lg font-bold mb-2">Game History</h2>
                 <ul>

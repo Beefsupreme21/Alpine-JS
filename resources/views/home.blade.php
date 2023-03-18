@@ -5,9 +5,6 @@
             <p>It's not meant to replace frameworks like Vue or React</p>
             <p>Useful in cases where minimal JS is needed. Dropdowns, tabs, models ect.</p>
         </div>
-
-
-
         <div class="mt-8">
             <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
                 <a href="/x-data">
@@ -16,28 +13,23 @@
                         <p class="text-xs font-medium text-gray-900">Declare a new Alpine component and its data for a block of HTML</p>
                     </li>
                 </a>
-
                 <a href="/x-show">
                     <li class="col-span-1 border border-black rounded-lg bg-white text-center min-h-32 p-8 hover:bg-gray-300">
                         <p class="text-lg font-medium text-gray-900">x-show</p>
                         <p class="text-xs font-medium text-gray-900">Toggle the visibility of an element</p>       
                     </li>
                 </a>
-
                 <a href="/x-text">
                     <li class="col-span-1 border border-black rounded-lg bg-white text-center min-h-32 p-8 hover:bg-gray-300">
                         <p class="text-lg font-medium text-gray-900">x-text/p>
                         <p class="text-xs font-medium text-gray-900">Set the text of an element</p>       
                     </li>
                 </a>
-
             </ul>
         </div>
-
         <div class="text-3xl text-center text-white mt-8">
             <p>Example Projects</p>
         </div>
-
         <div class="mt-8">
             <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
                 <a href="/faq">
@@ -46,28 +38,24 @@
                         <p class="text-xs font-medium text-gray-900">x-show, x-bind class, x-on click</p>
                     </li>
                 </a>
-
                 <a href="/modal">
                     <li class="col-span-1 rounded-lg bg-white text-center p-8 hover:bg-gray-300">
                         <p class="text-lg font-medium text-gray-900">x-modal</p>
                         <p class="text-xs font-medium text-gray-900"></p>       
                     </li>
                 </a>
-
                 <a href="/x-show">
                     <li class="col-span-1 rounded-lg bg-white text-center p-8 hover:bg-gray-300">
                         <p class="text-lg font-medium text-gray-900">x-show</p>
                         <p class="text-xs font-medium text-gray-900">Set the text content of an element</p>       
                     </li>
                 </a>
-
                 <a href="/dropdown">
                     <li class="col-span-1 rounded-lg bg-white text-center p-8 hover:bg-gray-300">
                         <p class="text-lg font-medium text-gray-900">Interactive Dropdown</p>
                         <p class="text-xs font-medium text-gray-900">From Stat Tracker</p>       
                     </li>
                 </a>
-
             </ul>
         </div>
     </div>

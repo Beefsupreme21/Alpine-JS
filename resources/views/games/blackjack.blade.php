@@ -1,5 +1,5 @@
 <x-fullscreen-layout>
-    <div x-data="blackjack" x-init="startGame()" class="flex flex-col justify-center h-screen">
+    <div x-data="blackjack" x-init="startGame()" class="flex flex-col justify-center h-screen bg-[#1C3A28]">
         <div class="flex-grow">
             <div class="text-center">
                 <h2 class="mb-4 font-bold text-lg">Dealer</h2>
@@ -10,73 +10,63 @@
             </div>
         </div>
         <div>
-            <button x-on:click="if (currentBet < playerBalance) { currentBet += 1 }">
-                <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="50" r="45" fill="#2196F3" stroke="black" stroke-width="2" />
-                    <circle cx="50" cy="50" r="30" fill="white" stroke="black" stroke-width="2" />
-                    <text x="50" y="58" font-size="24" font-family="Arial" font-weight="bold" text-anchor="middle">1</text>
-                </svg>
-            </button>
-            <button x-on:click="if (currentBet < playerBalance) { currentBet += 5 }">
-                <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="50" r="45" fill="#FF0000" stroke="black" stroke-width="2" />
-                    <circle cx="50" cy="50" r="30" fill="white" stroke="black" stroke-width="2" />
-                    <text x="50" y="58" font-size="24" font-family="Arial" font-weight="bold" text-anchor="middle">5</text>
-                </svg>
-            </button>
-            <button x-on:click="if (currentBet < playerBalance) { currentBet += 25 }">
-                <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="50" r="45" fill="#008000" stroke="black" stroke-width="2" />
-                    <circle cx="50" cy="50" r="30" fill="white" stroke="black" stroke-width="2" />
-                    <text x="50" y="58" font-size="24" font-family="Arial" font-weight="bold" text-anchor="middle">25</text>
-                </svg>
-            </button>
-            <button x-on:click="if (currentBet < playerBalance) { currentBet += 100 }">
-                <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="50" r="45" fill="#000000" stroke="black" stroke-width="2" />
-                    <circle cx="50" cy="50" r="30" fill="white" stroke="black" stroke-width="2" />
-                    <text x="50" y="58" font-size="24" font-family="Arial" font-weight="bold" text-anchor="middle">100</text>
-                </svg>
-            </button>
-        </div>
-
-
-
-
-          
-        <div class="flex flex-grow justify-between items-center">
-            <div>
-                <h3 class="text-lg font-bold mb-2">Balance:</h3>
-                <span x-text="playerBalance" class="text-xl font-bold"></span>
-            </div>
-    
-            <div>
-                <span class="font-semibold text-3xl mx-4 w-20 text-center" x-text="currentBet"></span>
-            </div>
-    
-            <div>
-                <button x-on:click="currentBet = 0" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Clear</button>
-                <button x-bind:disabled="currentBet === 0" x-on:click="placeBet()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Play</button>
+            <div x-show="gamePhase === 'betting'">Place your bet</div>
+            <div x-show="gamePhase === 'playing'">Hit or stand</div>
+            <div x-show="gamePhase === 'gameOver'">
+                <p x-text="resultsMessage" class="text-lg font-bold mt-4"></p>
             </div>
         </div>
-    
+        <div class="fixed top-4 left-4 text-lg font-bold">
+            <a href="/" class="hover:underline">Back to home</a>
+            <p class="mt-6">Balance: $<span x-text="playerBalance"></span></p>
+        </div>
         <div class="flex-grow">
             <div class="text-center">
-                <h2 class="mb-4 font-bold text-lg">Player 1</h2>
-                <template x-if="playerCards.some(card => card.value === 'A')">
-                    <span class="text-lg font-bold mb-2"><span x-text="playerHandValue - 10"></span> or </span>
-                </template>
-                <span x-text="playerHandValue" class="text-lg font-bold mb-2"></span>
+                <h2 class="mb-4 font-bold text-lg">$<span x-text="currentBet"></span></h2>
                 <div>
-                    <template x-for="card in playerCards">
-                        <img x-bind:src="getCardImage(card)" class="inline-block bg-white border border-gray-400 rounded-md p-1 m-1" alt="">
+                    <template x-if="playerHandValue">
+                        <span x-text="playerHandValue" class="text-lg font-bold p-3 bg-red-500 rounded-full"></span>
                     </template>
-                    <div>
-                        <button x-on:click="playerHit()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4">Hit</button>
-                        <button x-on:click="playerStand()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 ml-4">Stand</button>
-                    </div>
                 </div>
+
+                <template x-for="card in playerCards">
+                    <img x-bind:src="getCardImage(card)" class="inline-block bg-white border border-gray-400 rounded-md p-1 m-1">
+                </template>
             </div>
+        </div>
+        <div class="flex justify-center mb-12">
+            <div x-show="gamePhase === 'playing'">
+                <button x-on:click="playerStand()" class="bg-gray-500 text-white text-2xl font-bold py-3 px-6 rounded-lg">Stand</button>
+                <button x-on:click="playerHit()" class="bg-red-500 text-white text-2xl font-bold py-3 px-6 ml-3 rounded-lg">Hit</button>
+            </div>
+            <div x-show="gamePhase === 'betting'">
+                <button x-bind:disabled="currentBet === 0" 
+                    x-on:click="currentBet = 0" 
+                    x-bind:class="{'opacity-50 cursor-not-allowed': currentBet === 0, 'hover:bg-gray-600': currentBet !== 0}" 
+                    class="bg-gray-500 text-white text-2xl font-bold py-3 px-6 rounded-lg">
+                    CLEAR
+                </button>
+                <button x-bind:disabled="currentBet === 0" 
+                    x-on:click="placeBet()" 
+                    x-bind:class="{'opacity-50 cursor-not-allowed': currentBet === 0, 'hover:bg-red-600': currentBet !== 0}" 
+                    class="bg-red-500 text-white text-2xl font-bold py-3 px-6 ml-3 rounded-lg">
+                    PLAY
+                </button>
+            </div>
+        </div>
+        <div class="fixed bottom-4 right-4 space-x-2">
+            <button x-on:click="if (currentBet < playerBalance) { currentBet += 1 }">
+                <x-svg.chip-1/>
+            </button>
+            <button x-on:click="if (currentBet < playerBalance) { currentBet += 5 }">
+                <x-svg.chip-5/>
+            </button>
+            <button x-on:click="if (currentBet < playerBalance) { currentBet += 25 }">
+                <x-svg.chip-25/>
+            </button>
+            <button x-on:click="if (currentBet < playerBalance) { currentBet += 100 }">
+                <x-svg.chip-100/>
+            </button>
         </div>
     </div>
 

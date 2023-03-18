@@ -14,11 +14,7 @@
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     </head>
 
-    <body class="h-screen">
-        <header class="bg-[#12141C]">
-            <a href="/" class="p-3 block text-white">Home</a>
-        </header>
-
+    <body>
         <main class="max-w-screen min-h-screen bg-[#171923]">
             {{ $slot }}
         </main>

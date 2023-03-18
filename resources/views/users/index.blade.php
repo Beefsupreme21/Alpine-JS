@@ -1,5 +1,4 @@
 <x-layout>     
-
     <table x-data="usersTable" class="table-auto w-full text-black bg-white">
         <thead>
             <tr class="text-left font-medium">
