@@ -1,57 +1,80 @@
 <x-fullscreen-layout>
-    <div x-data="blackjack" x-init="startGame()" class="flex flex-col justify-center h-screen bg-[#1C3A28]">
-        <div class="flex-grow">
-            <div class="text-center">
-                <h2 class="mb-4 font-bold text-lg">Dealer</h2>
+    <div x-data="blackjack" x-init="startGame()" class="flex flex-col items-center py-4 bg-[#1C3A28]">
+        <div class="flex justify-between items-start">
+            <div class="fixed top-4 left-4 text-lg font-bold">
+                <a href="/">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                        <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L12 5 5 12l7 7 3.41-3.41z"/>
+                    </svg>
+                    Back to Home
+                </a>
+                <p class="mt-6">Balance: $<span x-text="playerBalance"></span></p>
+            </div>
+        </div>
+        <div class="flex flex-col h-screen w-full max-w-screen-md px-4 border border-red-500">
+            <div class="flex flex-col items-center mb-4">
+                <h2 class="font-bold text-lg">Dealer</h2>
                 <h3 x-text="dealerHandValue" class="text-lg font-bold mb-2"></h3>
-                <template x-for="(card, index) in dealerCards">
-                    <img x-bind:src="showCardValues[index] ? getCardImage(card) : '/images/cards/back-blue.png'" class="inline-block bg-white border border-gray-400 rounded-md p-1 m-1" alt="">
-                </template>
-            </div>
-        </div>
-        <div>
-            <div x-show="gamePhase === 'betting'">Place your bet</div>
-            <div x-show="gamePhase === 'playing'">Hit or stand</div>
-            <div x-show="gamePhase === 'gameOver'">
-                <p x-text="resultsMessage" class="text-lg font-bold mt-4"></p>
-            </div>
-        </div>
-        <div class="fixed top-4 left-4 text-lg font-bold">
-            <a href="/" class="hover:underline">Back to home</a>
-            <p class="mt-6">Balance: $<span x-text="playerBalance"></span></p>
-        </div>
-        <div class="flex-grow">
-            <div class="text-center">
-                <h2 class="mb-4 font-bold text-lg">$<span x-text="currentBet"></span></h2>
-                <div>
-                    <template x-if="playerHandValue">
-                        <span x-text="playerHandValue" class="text-lg font-bold p-3 bg-red-500 rounded-full"></span>
+                <div class="flex justify-center">
+                    <template x-for="(card, index) in dealerCards">
+                        <img x-bind:src="showCardValues[index] ? getCardImage(card) : '/images/cards/back-blue.png'" class="inline-block bg-white border border-gray-400 rounded-md p-1 m-1" alt="">
                     </template>
                 </div>
-
-                <template x-for="card in playerCards">
-                    <img x-bind:src="getCardImage(card)" class="inline-block bg-white border border-gray-400 rounded-md p-1 m-1">
-                </template>
             </div>
-        </div>
-        <div class="flex justify-center mb-12">
-            <div x-show="gamePhase === 'playing'">
-                <button x-on:click="playerStand()" class="bg-gray-500 text-white text-2xl font-bold py-3 px-6 rounded-lg">Stand</button>
-                <button x-on:click="playerHit()" class="bg-red-500 text-white text-2xl font-bold py-3 px-6 ml-3 rounded-lg">Hit</button>
+            <div class="flex-grow flex flex-col items-center justify-center">
+                <div x-show="gamePhase === 'betting'">Place your bet</div>
+                <div x-show="gamePhase === 'playing'">Hit or stand</div>
+                <div x-show="gamePhase === 'gameOver'">
+                    <p x-text="resultsMessage" class="text-lg font-bold mt-4"></p>
+                </div>
+                <h2 class="font-bold text-lg">$<span x-text="currentBet"></span></h2>
+                <div class="flex justify-center">
+                    <template x-for="chip in getChipsForDisplay()">
+                        <div class="flex items-center space-x-2">
+                            <template x-if="chip.denomination === 1">
+                                <x-svg.chip-1/>
+                            </template>
+                            <template x-if="chip.denomination === 5">
+                                <x-svg.chip-5/>
+                            </template>
+                            <template x-if="chip.denomination === 25">
+                                <x-svg.chip-25/>
+                            </template>
+                            <template x-if="chip.denomination === 100">
+                                <x-svg.chip-100/>
+                            </template>
+                            <span x-text="chip.count" class="font-bold"></span>
+                        </div>
+                    </template>
+                </div>
+                     
             </div>
-            <div x-show="gamePhase === 'betting'">
-                <button x-bind:disabled="currentBet === 0" 
-                    x-on:click="currentBet = 0" 
-                    x-bind:class="{'opacity-50 cursor-not-allowed': currentBet === 0, 'hover:bg-gray-600': currentBet !== 0}" 
-                    class="bg-gray-500 text-white text-2xl font-bold py-3 px-6 rounded-lg">
-                    CLEAR
-                </button>
-                <button x-bind:disabled="currentBet === 0" 
-                    x-on:click="placeBet()" 
-                    x-bind:class="{'opacity-50 cursor-not-allowed': currentBet === 0, 'hover:bg-red-600': currentBet !== 0}" 
-                    class="bg-red-500 text-white text-2xl font-bold py-3 px-6 ml-3 rounded-lg">
-                    PLAY
-                </button>
+            <div class="flex flex-col items-center mt-4">
+                <div class="flex justify-center">
+                    <template x-for="card in playerCards">
+                        <img x-bind:src="getCardImage(card)" class="inline-block bg-white border border-gray-400 rounded-md p-1 m-1">
+                    </template>
+                </div>
+            </div>
+            <div class="flex justify-center mb-12">
+                <div x-show="gamePhase === 'playing'">
+                    <button x-on:click="playerStand()" class="bg-gray-500 text-white text-2xl font-bold py-3 px-6 rounded-lg">Stand</button>
+                    <button x-on:click="playerHit()" class="bg-red-500 text-white text-2xl font-bold py-3 px-6 ml-3 rounded-lg">Hit</button>
+                </div>
+                <div x-show="gamePhase === 'betting'">
+                    <button x-bind:disabled="currentBet === 0" 
+                        x-on:click="currentBet = 0" 
+                        x-bind:class="{'opacity-50 cursor-not-allowed': currentBet === 0, 'hover:bg-gray-600': currentBet !== 0}" 
+                        class="bg-gray-500 text-white text-2xl font-bold py-3 px-6 rounded-lg">
+                        CLEAR
+                    </button>
+                    <button x-bind:disabled="currentBet === 0" 
+                        x-on:click="placeBet()" 
+                        x-bind:class="{'opacity-50 cursor-not-allowed': currentBet === 0, 'hover:bg-red-600': currentBet !== 0}" 
+                        class="bg-red-500 text-white text-2xl font-bold py-3 px-6 ml-3 rounded-lg">
+                        PLAY
+                    </button>
+                </div>
             </div>
         </div>
         <div class="fixed bottom-4 right-4 space-x-2">
@@ -143,11 +166,25 @@
                     return `/images/cards/${imageName}.png`;
                 },
         
-                dealCards() {
+                async dealCards() {
                     this.drawCard('player');
+                    await this.delay(500);
                     this.drawCard('dealer');
+                    await this.delay(500);
                     this.drawCard('player');
+                    await this.delay(500);
                     this.drawCard('dealer');
+                    this.checkForBlackjack();
+                },
+
+                checkForBlackjack() {
+                    if (this.dealerHandValue == 21 && this.playerHandValue == 21) {
+                        this.playerTies();
+                    } else if (this.dealerHandValue != 21 && this.playerHandValue == 21) {
+                        this.playerWins();
+                    } else if (this.dealerHandValue == 21 && this.playerHandValue != 21) {
+                        this.dealerWins();
+                    }
                 },
         
                 drawCard(player) {
@@ -180,9 +217,10 @@
                     this.dealerTurn();
                 },
 
-                dealerTurn() {
+                async dealerTurn() {
                     this.revealCardValues();
                     while (this.dealerHandValue < 17) {
+                        await this.delay(1000);
                         const card = this.deck.shift();
                         this.dealerCards.push(card);
                         this.calculateHandValue('dealer');
@@ -198,26 +236,32 @@
                     }
                 },
 
-                playerWins() {
+                async playerWins() {
                     this.resultsMessage = "Player wins!";
                     this.playerBalance += this.currentBet * 2;
                     this.currentBet = 0;
                     this.gamePhase = 'gameOver';
+                    await this.delay(2500);
+                    this.resetGame();
                 },
 
-                playerTies() {
+                async playerTies() {
                     this.revealCardValues();
                     this.resultsMessage = "Push";
                     this.playerBalance += this.currentBet;
                     this.currentBet = 0;
                     this.gamePhase = 'gameOver';
+                    await this.delay(2500);
+                    this.resetGame();
                 },
 
-                dealerWins() {
+                async dealerWins() {
                     this.revealCardValues();
                     this.resultsMessage = "Dealer wins!";
                     this.currentBet = 0;
                     this.gamePhase = 'gameOver';
+                    await this.delay(2500);
+                    this.resetGame();
                 },
 
                 placeBet() {
@@ -258,12 +302,36 @@
                     return handValue;
                 },
 
+                getChipsForDisplay() {
+                    let bet = this.currentBet;
+                    const chipDenominations = [100, 25, 5, 1];
+
+                    const chipsForDisplay = [];
+
+                    chipDenominations.forEach(denomination => {
+                        const chipCount = Math.floor(bet / denomination);
+                        if (chipCount > 0) {
+                            chipsForDisplay.push({
+                                denomination: denomination,
+                                count: chipCount,
+                            });
+                            bet -= chipCount * denomination;
+                        }
+                    });
+
+                    return chipsForDisplay;
+                },
+
                 calculateHandValue(player) {
                     if (player === 'player') {
                         this.playerHandValue = this.sumCardValues(this.playerCards);
                     } else if (player === 'dealer') {
                         this.dealerHandValue = this.sumCardValues(this.dealerCards);
                     }
+                },
+
+                delay(ms) {
+                    return new Promise((resolve) => setTimeout(resolve, ms));
                 },
             }))
         })
